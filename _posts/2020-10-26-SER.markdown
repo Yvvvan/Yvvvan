@@ -1,0 +1,175 @@
+---
+layout:     post
+title:      "机器人学中的状态估计-01"
+subtitle:   "这大约的确会有意思"
+date:       2020-10-26
+author:     "Yvan"
+header-img: "img/in-post/rse-1.jpg"
+header-mask: 0.3
+no-catalog: false
+mathjax: true
+tags:
+    - Notes
+    - Robotics
+---
+
+> Robotics inherently deals with things that move in the world.
+
+**Introduction**
+
+**Common Issues** in applications：
+
+* **State** estimation
+  * **State**: a set of quantities (position, orientation, velocity, ...)
+* Control
+
+**Sensors and Measurements**
+
+* `interoceptive`: measurements of **velocity**, **acceleration**
+  * eg. accelerometer, gyroscope, wheel odometer
+* `exteroceptive`: measurements of **position**, **orientation**
+  * eg. camera, time-of-flight transmitter/receiver(laser rangefinder, GPS）
+
+Problem in this book: Estimation is the problem of reconstructing the underlying state of a system given a
+sequence of measurements as well as a prior model of the system.
+
+> 状态估计，是根据系统的先验模型和测量序列，对系统内在状态进行重构的问题。
+
+
+
+# Estimation Machinery
+
+## K2 Primer on Probability Theory
+
+### 2.1 PDF
+
+> **这一章节主要是一些基础概率论公式。**
+>
+> 因为最后要笔试，所以写得**稍微**详细一点，以免到时候突然卡壳。其实基本上不用怎么看，[可以直接跳到总结](#summary)。
+
+#### 2.1.1 Definitions
+
+`probability`: $\int_a^b p(x)dx = 1$ 
+
+`conditional probability`: $(\forall y) \int_a^b p(x \mid y)dx = 1$
+
+`joint probability`:  $\int_a^b p(x)dx =\int_{a_N}^{b_N}...\int_{a_2}^{b_2}\int_{a_1}^{b_1}p(x_1,x_2, ... ,x_N)dx_1dx_2...dx_N = 1$
+
+#### 2.1.2 Bayes' Rule and Inference
+
+<center>$p(x,y)=p(x \mid y) \cdot p(y) =p(y \mid x)\cdot p(x)$ <br/><br/>
+    $p(x \mid y) = $ <font size=5> $\frac{p(y \mid x) \cdot p(x)}{p(y)} $</font>
+</center>
+
+> 物理意义: $x$ := 状态，$y$ := 传感器读数，$p(y\|x)$ := 传感器模型，$p(x\|y)$ := 状态估计
+
+
+
+> 离散的类推：参考高中数学/概率论：
+>
+> 介于生活离开数学已经有段时间了，这里用wiki的[吸毒者检测范例](https://zh.wikipedia.org/wiki/%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86#%E5%90%B8%E6%AF%92%E8%80%85%E6%A3%80%E6%B5%8B)回顾一下：
+>
+> $x$:= 吸毒,			$\bar x$:= 不吸毒,			$y$:= 阳性,			$\bar y$:= 阴性
+>
+> 吸毒率**预计**为0.5%，则 $p(x)$=0.005 ,  $p(\bar x)$ = 0.995 , 为**x的先验概率(prior)**。
+>
+> 检测试剂的*阳性*检测准确率(Sensitivity)，即吸毒的人被检查出阳性的概率为99%，则 $p(y\|x)$=0.99 ，是**似然(Likelihood)**；出错率则为1%，即 $p(\bar y\|x)$=0.09 。检测试剂的*阴性*检测准确率(Specificity)，即不吸毒的人被检查出阴性的概率为99%，则 $p(\bar y\|\bar x)$=0.99 ；出错率则为1%，即 $p(y\|\bar x)$=0.09 。
+>
+> 那么阳性检出率，即一个人吸毒且被查为阳性 或 不吸毒且被查为阳性，$p(y)= p(x,y) + p(\bar x,y) = p(x) \cdot p(y\|x) + p(\bar x) \cdot p(y\|\bar x)$ = 0.0149 ，是**y的边缘概率/标准化常量**。
+>
+> 那么对于一个呈阳性的人，他真的吸毒的概率 $p(x\|y) = \frac{p(y \| x) \cdot p(x)}{p(y)} $ = 0.3322, 即**已知y发生后x的条件概率/x的后验概率(posterior)**。
+>
+> **返回到状态估计理论**：即在传感器读数y成阳性的条件下，估计x的吸毒史状态。
+
+by marginalization:
+
+<center>$p(y)= p(y) \cdot \underbrace{\int p(x \mid y)dx}_{1} = \int p(x \mid y)\cdot p(y) dx $ <br/>
+   $ = \int p(x,y)dx = \int p(y\mid x)\cdot p(x)dx$ </center>
+
+> 边缘概率：传感器读数是0.1的概率有多大 p(y=0.1) = 求和所有p(x 且 y=0.1)组合。
+
+#### 2.1.3 Moments
+
+<center>$\mu_n = \int x^np(x)dx$</center>
+
+* zeroth probability: 1
+* first probability: `mean`$\mu = E[x]=\int xp(x)dx$
+* second probability: `covariance matrix` $\Sigma = E[(x-\mu)(x-\mu)^T]$
+
+#### 2.1.4 Sample Mean and Covariance
+
+expected: `mean` $\mu$, `covariance`$\Sigma$
+
+approach: `sample mean` $\mu_{meas} $, `sample covariance` $\Sigma_{meas}$(with (N-1) as Bessel's correction)
+
+> **Bessel's correction**
+>
+> 假定：$\mu$ 已知，$\Sigma$ 未知，则：$\Sigma = E[\frac{1}{n}\sum_1^n(x_i-\mu)^2]$
+>
+> 现实：$\mu$ 未知，$\Sigma$ 未知，用样本均值 $\mu_m $ 代替 $\mu$ 会导致 $E[\frac{1}{n}\sum_1^n(x_i-\mu_m)^2] < E[\frac{1}{n}\sum_1^n(x_i-\mu)^2] = \Sigma$，导致 $\Sigma$ 被低估, 所以需要用 (n-1) 放大一些。详细证明，见[知乎 - 马同学的回答](https://www.zhihu.com/question/20099757/answer/312670291)。
+
+#### 2.1.5 Statistically Independent, Uncorrelated
+
+* `Independent` $p(x,y) = p(x)p(y)$
+* `Uncorrelated` $E[xy^T]=E[x]E[y]^T$
+
+> 相关系数 $r = \frac{Cov(x,y)}{\sigma_x\sigma_y}$ 可以看作是标准化后的协方差，剔除了变量变化幅度对相关性的影响。从几何的角度，一定程度上，协方差可以理解为向量x，y的内积，相关系数是夹角的余弦值。
+>
+> $r = 0$ 表示 uncorrelated, 即 
+> $cov(x,y) =  E[(x-\mu_x)(y-\mu_y)] = E[xy-\mu_xy-x\mu_y+\mu_x\mu_y]$
+> $=E[xy]-\mu_xE[y]-\mu_yE[x]+\mu_x\mu_y = E[xy]-\mu_x\mu_y-\mu_x\mu_y+\mu_x\mu_y = E[xy]-E[x]E[y] = 0$
+
+Independent $\rightarrow$ Uncorrelated, but Uncorrelated $\nrightarrow$ Independent .
+
+> eg. $x^2 + y^2 = 1$
+
+In **Gaussian distribution**: Independent $\equiv$ Uncorrelated
+
+#### 2.1.6 Normalized Product
+
+merge two estimations (eg. from different sensors) $p_1(x), p_2(x)$ as $p_1(x) \cdot p_2(x)$, search an $\eta$ 
+
+<center>$p(x) = \eta\cdot p_1(x)\cdot p_2(x) $  with $\int p(x) =1 $ </center>
+
+if $x$ is a status, $y_1$ and $y_2$ are two measurements from two statistical independent sensors:
+<center> $p(x \mid y_1, y_2) = \eta p(x \mid y_1) p(x \mid y_2)  \tag{Normalized Product [1]}$ <br/><br/>
+$p(x \mid y_1, y_2) =$ <font size=5>$\frac {p(y_1,y_2 \mid x)p(x)} {p(y_1, y_2)}$</font> $\tag{Bayes' Rule [2]} $ 
+$p(y_1,y_2 \mid x) = p(y_1 \mid x)p(y_2\mid x)= $<font size=5>$\frac{p(x\mid y_1)p(y_1)} {p(x)}\frac{p(x\mid y_2)p(y_2)}{p(x)}$ </font>$\tag{Independence and Bayes' Rule [3]}$
+$p(x \mid y_1, y_2) = p(x\mid y_1)p(x\mid y_2)$<font size=5>$\frac{p(y_1)p(y_2)} {p(y_1,y_2)p(x)}$</font>$\tag{[3]+[2]     [4]}$
+</center>
+Compare [4] and [1], $\eta = $<font size=5>$\frac{p(y_1)p(y_2)} {p(y_1,y_2)p(x)}$</font>. So if $p(x)$ is uniform over all values of x (i.e., constant), then is $\eta$ also a constant.
+
+#### 2.1.7 Shannon and Mutual Information
+
+* `Negative Entropy` (Shannon information): $H(x) = -E[\ln{p(x)}] = - \int p(x) \ln{p(x)}dx$
+
+* `Mutal Information`:  $I(x,y) = E[\ln{\frac{p(x,y)}{p(x)p(y)}}] = \int \int p(x,y) \ln(\frac{p(x,y)}{p(x)p(y)})dxdy$
+
+Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$.
+
+
+
+#### 2.1.8 Cram**é**r-Rao Lower Bound and Fisher Information
+
+
+
+<p id = "summary"></p>
+
+---
+
+
+
+---
+
+### 小结
+
+|             | 普通的概率密度函数                                           |
+| ----------- | ------------------------------------------------------------ |
+| 定义和关系  | 联合 = 条件$ \times $边缘                                    |
+| 贝叶斯      | 后验 = <font size=5>$ \frac{似然 \times 先验}{标准化常量}$</font> |
+| 矩          | 期望、方差 以及 与样本均值、样本方差的区别                   |
+| 独立/不相关 | 定义                                                         |
+| 归一化积    | 定义、原理                                                   |
+| 信息熵      | 负熵、互信息 及 其关系： 互信息 = 边缘熵之和 - 联合熵        |
+
+> 我以为这是一门有意思的课 :) ， 没想到又是数学课。暴毙。
