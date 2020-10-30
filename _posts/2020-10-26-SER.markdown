@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-01"
-subtitle:   "这大约的确会有意思"
+subtitle:   "这大约的确会有意思吧"
 date:       2020-10-26
 author:     "Yvan"
 header-img: "img/in-post/rse-1.jpg"
@@ -11,6 +11,8 @@ mathjax: true
 tags:
     - Notes
     - Robotics
+    - 概率论
+typora-root-url: ..
 ---
 
 > Robotics inherently deals with things that move in the world.
@@ -49,7 +51,7 @@ sequence of measurements as well as a prior model of the system.
 
 #### 2.1.1 Definitions
 
-`probability`: $\int_a^b p(x)dx = 1$ 
+`probability`: $\int_a^b p(x)dx = 1$
 
 `conditional probability`: $(\forall y) \int_a^b p(x \mid y)dx = 1$
 
@@ -115,7 +117,7 @@ approach: `sample mean` $\mu_{meas} $, `sample covariance` $\Sigma_{meas}$(with 
 
 > 相关系数 $r = \frac{Cov(x,y)}{\sigma_x\sigma_y}$ 可以看作是标准化后的协方差，剔除了变量变化幅度对相关性的影响。从几何的角度，一定程度上，协方差可以理解为向量x，y的内积，相关系数是夹角的余弦值。
 >
-> $r = 0$ 表示 uncorrelated, 即 
+> $r = 0$ 表示 uncorrelated, 即
 > $cov(x,y) =  E[(x-\mu_x)(y-\mu_y)] = E[xy-\mu_xy-x\mu_y+\mu_x\mu_y]$
 > $=E[xy]-\mu_xE[y]-\mu_yE[x]+\mu_x\mu_y = E[xy]-\mu_x\mu_y-\mu_x\mu_y+\mu_x\mu_y = E[xy]-E[x]E[y] = 0$
 
@@ -127,13 +129,13 @@ In **Gaussian distribution**: Independent $\equiv$ Uncorrelated
 
 #### 2.1.6 Normalized Product
 
-merge two estimations (eg. from different sensors) $p_1(x), p_2(x)$ as $p_1(x) \cdot p_2(x)$, search an $\eta$ 
+merge two estimations (eg. from different sensors) $p_1(x), p_2(x)$ as $p_1(x) \cdot p_2(x)$, search an $\eta$
 
 <center>$p(x) = \eta\cdot p_1(x)\cdot p_2(x) $  with $\int p(x) =1 $ </center>
 
 if $x$ is a status, $y_1$ and $y_2$ are two measurements from two statistical independent sensors:
 <center> $p(x \mid y_1, y_2) = \eta p(x \mid y_1) p(x \mid y_2)  \tag{Normalized Product [1]}$ <br/><br/>
-$p(x \mid y_1, y_2) =$ <font size=5>$\frac {p(y_1,y_2 \mid x)p(x)} {p(y_1, y_2)}$</font> $\tag{Bayes' Rule [2]} $ 
+$p(x \mid y_1, y_2) =$ <font size=5>$\frac {p(y_1,y_2 \mid x)p(x)} {p(y_1, y_2)}$</font> $\tag{Bayes' Rule [2]} $
 $p(y_1,y_2 \mid x) = p(y_1 \mid x)p(y_2\mid x)= $<font size=5>$\frac{p(x\mid y_1)p(y_1)} {p(x)}\frac{p(x\mid y_2)p(y_2)}{p(x)}$ </font>$\tag{Independence and Bayes' Rule [3]}$
 $p(x \mid y_1, y_2) = p(x\mid y_1)p(x\mid y_2)$<font size=5>$\frac{p(y_1)p(y_2)} {p(y_1,y_2)p(x)}$</font>$\tag{[3]+[2]     [4]}$
 </center>
@@ -161,7 +163,7 @@ Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$
 
 ---
 
-### 小结
+#### 2.1 小结
 
 |             | 普通的概率密度函数                                           |
 | ----------- | ------------------------------------------------------------ |
@@ -173,3 +175,92 @@ Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$
 | 信息熵      | 负熵、互信息 及 其关系： 互信息 = 边缘熵之和 - 联合熵        |
 
 > 我以为这是一门有意思的课 :) ， 没想到又是数学课。暴毙。
+
+---
+
+---
+
+### 2.2 Gaussian PDF
+
+> **这一章节是看高斯密度函数的一些基本性质。线代+概率论**
+>
+> 这里仅做初步整理，开课后按需填写重要证明信息。
+
+#### 2.2.1 Definitions
+
+* `Gaussian PDF`: $p(x\mid\mu,\sigma^2)=$<font size=5>$\frac{1}{\sqrt{2\pi\sigma^2}}$</font>$exp(-$<font size=5>$\frac{1}{2}\frac{(x-\mu)^2}{\sigma^2})$</font>
+
+  * > Q1: $\int p(x) dx= 1$ ?
+
+* `multivariate Gaussian PDF`: $p(x\mid\mu,\Sigma)=$<font size=5>$\frac{1}{\sqrt{(2\pi)^Ndet(\Sigma)}}$</font>$exp(-$<font size=5>$\frac{1}{2}$</font> $(x-\mu)^T \Sigma^{-1}(x-\mu))$
+
+  * `mean` $\mu = E[x] =\int_{-\infty}^{\infty}xp(x)dx$ 
+
+  * `covariance matrix` $\Sigma = E[(x-\mu)(x-\mu)^T] = \int_{-\infty}^{\infty}(x-\mu)(x-\mu)^Tp(x)dx$ 
+
+  * > 物理意义：$\mu$ 最高点的位置 ， $\Sigma$ 等高线(椭圆)的情况 
+  
+  * > Q2:  from `Gaussian PDF` to `multivariate Gaussian PDF`
+    >
+    > Q3: `mean` $\mu$ and `covariance matrix` $\Sigma$ 
+
+#### 2.2.2 Isseris' Theorem
+
+#### 2.2.3 Joint G-PDF
+
+<img src="/img/in-post/ser/jointGPDF.png" style="zoom:40%;" />
+
+> Q4: `Gaussian inference`: $p(y)$ and $p(x \mid y)$
+>
+> Covariance matrix in UDL-Decomposition or Schur-Complement:
+>
+> <img src="/img/in-post/ser/jointGPDF-2.png"  style="zoom:50%;" />
+>
+> Exponent part of Gaussian PDF:
+>
+> <img src="/img/in-post/ser/jointGPDF-4.png" alt="jointGPDF-4" style="zoom:50%;" />
+>
+> so: $p(x,y) = p(x\|y)p (y)$
+
+#### 2.2.4 Statistically Independent, Uncorrelated
+
+Independent $\equiv$ Uncorrelated
+
+> Q5: Independent $\equiv$ Uncorrelated
+
+#### 2.2.5 Linear Change
+
+$x \in \mathbb{R} ^ N \sim \mathcal{N}(\mu_x, \Sigma_{xx})$
+
+if $y = Gx$   with   $G \in  \mathbb{R} ^ {M \times N}$
+
+* `mean` $\mu_y  = E[y] = E[Gx] = G\cdot E[x]$ = G\mu_x$
+* `covariance matrix` $\Sigma_{yy}  = E[(y-\mu_y)(y-\mu_y)^T] = G \cdot E[(x-\mu_x)(x-\mu_x)^T] \cdot G^T = G\Sigma_{xx}G^T$ 
+
+So $y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(G\mu_x, G\Sigma_{xx}G^T)$
+
+> Q6: Another way?
+
+#### 2.2.6 Normalized Product
+
+<img src="/img/in-post/ser/NPGPDF.png" style="zoom: 67%;" />
+
+> Q7: Proof
+
+#### 2.2.7 Sherman-Morrison-Woodbury Identity
+
+$ M = \left[ \begin{matrix} A^{-1} & -B \\\\\\ C & D \end{matrix} \right] $
+
+Reform M into LDU and UDL.
+
+Invert M based on these 2 forms. That is: **$M^{-1}=(LDU)^{-1}=(UDL)^{-1}$**
+
+Unfold and compare $(LDU)^{-1}, (UDL)^{-1}$
+
+<img src="/img/in-post/ser/SMWI.png" style="zoom: 67%;" />
+
+#### 2.2.8 Nonlinear Change
+
+
+
+> 待续
