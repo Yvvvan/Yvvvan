@@ -234,7 +234,7 @@ $x \in \mathbb{R} ^ N \sim \mathcal{N}(\mu_x, \Sigma_{xx})$
 
 if $y = Gx$   with   $G \in  \mathbb{R} ^ {M \times N}$
 
-* `mean` $\mu_y  = E[y] = E[Gx] = G\cdot E[x]$ = G\mu_x$
+* `mean` $\mu_y  = E[y] = E[Gx] = G\cdot E[x] = G\mu_x$
 * `covariance matrix` $\Sigma_{yy}  = E[(y-\mu_y)(y-\mu_y)^T] = G \cdot E[(x-\mu_x)(x-\mu_x)^T] \cdot G^T = G\Sigma_{xx}G^T$ 
 
 So $y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(G\mu_x, G\Sigma_{xx}G^T)$
