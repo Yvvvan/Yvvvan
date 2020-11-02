@@ -43,6 +43,8 @@ sequence of measurements as well as a prior model of the system.
 
 ## K2 Primer on Probability Theory
 
+> 重点就是 **[2.2.3高斯推论](#2.2.3 Joint G-PDF)**，**[2.2.5高斯分布线性变换](#225-linear-change) **和 **[2.2.8高斯分布非线性变换](#228-nonlinear-change)**。
+
 ### 2.1 PDF
 
 > **这一章节主要是一些基础概率论公式。**
@@ -182,7 +184,9 @@ Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$
 
 > **这一章节是看高斯密度函数的一些基本性质。线代+概率论**
 >
-> 这里仅做初步整理，开课后按需填写重要证明信息。
+> 这里仅做初步整理。
+>
+> 重点是：`高斯推论` 以及 `线性/非线性变换`。
 
 #### 2.2.1 Definitions
 
@@ -279,7 +283,7 @@ That is to calculate p(y):
 
 > **为什么这么变形：**
 >
-> 1 因为都有 $y-\mu_y$，而且是对 $x$做积分，想到拆分无关的 $y$部分。
+> 因为都有 $y-\mu_y$，而且是对 $x$做积分，想到拆分无关的 $y$部分。
 >
 > **接下来如何变形：**
 >
