@@ -159,8 +159,6 @@ Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$
 
 ---
 
-
-
 ---
 
 #### 2.1 小结
@@ -249,6 +247,8 @@ So $y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(G\mu_x, G\Sigma_{xx}G^T
 
 #### 2.2.7 Sherman-Morrison-Woodbury Identity
 
+> 简单的矩阵分解，将用于高斯分布的非线性变换。
+
 $ M = \left[ \begin{matrix} A^{-1} & -B \\\\\\ C & D \end{matrix} \right] $
 
 Reform M into LDU and UDL.
@@ -261,6 +261,81 @@ Unfold and compare $(LDU)^{-1}, (UDL)^{-1}$
 
 #### 2.2.8 Nonlinear Change
 
+That is to calculate p(y):
 
+<img src="/img/in-post/ser/nc.png" alt="nc" style="zoom: 80%;" />
 
-> 待续
+**`Linearization`**  of $\mathbf{g(\cdot)}$:
+
+<img src="/img/in-post/ser/nclinear.png" alt="nclinear" style="zoom: 57%;" />
+
+> 非线性变换 $g(\cdot)$后 $\mu_y$不一定等于 $g(\mu_x)$ (只有线性变换才肯定等于)。这边是*假设*。
+>
+> 然后对$x=\mu_x$点取偏导，即Jacobi矩阵。即 线性化该模型 $g(\cdot)$。
+>
+> 现在 $g(\cdot)$ 是一个线性变换了，那么再代回 $p(y)$。
+
+<img src="/img/in-post/ser/nclinear2.png" alt="nclinear2"  />
+
+> **为什么这么变形：**
+>
+> 1 因为都有 $y-\mu_y$，而且是对 $x$做积分，想到拆分无关的 $y$部分。
+>
+> **接下来如何变形：**
+>
+> 那么现在积分内的部分，相当于 $a^2 - 2ab$ ($a = x-\mu_x, b=y-\mu_y$，实数系数 $-1/2$接下来不考虑了)。那么想到补全平方项 $(a- b)^2 -b^2$。比较系数(即矩阵部分), $a^2$前是 $\Sigma_{xx}^{-1}+G^TRG$, $2ab$前是$R^{-1}G$，定义一个 $F$使整理方便。
+>
+> 令 $F^T \cdot (\Sigma_{xx}^{-1}+G^TRG )= R^{-1}G$, 为了简明 这边再令 $A = \Sigma_{xx}^{-1}+G^TRG$，以及省略矩阵乘法的转置等操作。
+>
+> 那么 原式 = $A\cdot a^2 - 2\cdot FA\cdot ab = A(a-F\cdot b)^2-F^2\cdot b^2$。最后还有一开始的$-1/2$。
+>
+> 下图第一行是完全平方部分，第二行是$F^2b^2$部分。
+
+**积分部分**
+
+![nclinear3](/img/in-post/ser/nclinear3.png)
+
+> **接下来又要干嘛：**
+>
+> 第一部分是关于 $x$的积分，而我们需要 $p(y)$，根据全概率公式，积完后得到常数，可以与 归一化积 $\eta$合并。
+>
+> 第二部分$F^2b^2$，即 $(y-\mu_y)$的部分，与 $x$无关, 提出积分，也是最后剩下的部分。
+>
+> 根据 $F^T \cdot (\Sigma_{xx}^{-1}+G^TRG )= R^{-1}G$，替换回 $F$。
+>
+> 然后根据[SMW恒等式](#2.2.7 Sherman-Morrison-Woodbury Identity)，观察后....，即可化简。
+>
+> 最后得到关于y的高斯分布。
+
+![nclinear4](/img/in-post/ser/nclinear4.png)
+
+> 推导证明这么麻烦，但结论缺和简单的推论差不多的。相当于 $y = G(x)+R$的线性变换。。。佛
+
+<center><font size=6>$y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(g(\mu_x), R+G\Sigma_{xx}G^T)$</font></center>
+
+#### 2.2.9 Shannon Information of GPDF
+
+#### 2.2.10 Mutual Information of GPDF
+
+#### 2.2.11 Cramer-Rao Kower Bound of GPDF
+
+---
+
+---
+
+#### 2.2 小结
+
+|              | PDF                                                        | Gaussian PDF                                      |
+| ------------ | ---------------------------------------------------------- | ------------------------------------------------- |
+| 定义和关系   | 联合 = 条件$ \times $边缘                                  | 一维 → 多维 <br />**高斯推断**：联合 → 条件、边缘 |
+| 贝叶斯       | 后验 = <font size=5>$ \frac{似然 \times 先验}{标准化常量}$ |                                                   |
+| 矩(线性变换) | 期望、方差                                                 | 线性变换                                          |
+| 独立/不相关  | 定义                                                       | 证明                                              |
+| 归一化积     | 定义、原理                                                 | 证明 (像并联电路电阻)                             |
+| 信息熵       | 负熵、互信息 <br />互信息 = 边缘熵之和 - 联合熵            | *<略>*                                            |
+| CR下界       | *<略>*                                                     | *<略>*                                            |
+| 其他         |                                                            | 非线性变换(线性化)                                |
+
+---
+
+---
