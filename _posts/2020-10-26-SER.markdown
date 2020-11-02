@@ -49,7 +49,7 @@ sequence of measurements as well as a prior model of the system.
 
 > **这一章节主要是一些基础概率论公式。**
 >
-> 因为最后要笔试，所以写得**稍微**详细一点，以免到时候突然卡壳。其实基本上不用怎么看，[可以直接跳到总结](#summary)。
+> 因为最后要笔试，所以写得**稍微**详细一点，以免到时候突然卡壳。其实基本上不用怎么看，[可以直接跳到 2.1总结 ](#summary)。
 
 #### 2.1.1 Definitions
 
@@ -186,7 +186,7 @@ Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$
 >
 > 这里仅做初步整理。
 >
-> 重点是：`高斯推论` 以及 `线性/非线性变换`。
+> 重点是：**高斯推论** 以及 **线性/非线性变换**。
 
 #### 2.2.1 Definitions
 
