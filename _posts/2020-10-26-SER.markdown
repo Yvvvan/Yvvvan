@@ -203,6 +203,12 @@ Clearly, if x,y are independent, $I(x,y) = 0$. Else, $I(x,y) = H(x)+H(y)-H(x,y)$
   * > Q2:  from `Gaussian PDF` to `multivariate Gaussian PDF`
     >
     > Q3: `mean` $\mu$ and `covariance matrix` $\Sigma$ 
+    >
+    > ![erwartunggaus](/img/in-post/ser/erwartunggaus.png)
+    >
+    > ![covargaus1](/img/in-post/ser/covargaus1.png)
+    >
+    > ![covargaus2](/img/in-post/ser/covargaus2.png)
 
 #### 2.2.2 Isseris' Theorem
 
