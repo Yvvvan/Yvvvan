@@ -33,7 +33,41 @@ So <img src="/img/in-post/ser/k3model2.png" alt="k3model2" style="zoom: 75%;" />
 
 
 
-> 2. 分成 **batch linear-Gussain techniques (smoothers)** 和 **recursive state estimators (filters)** 分别在3.1.2和3.1.3
+> 2. 分成 **batch linear-Gussain techniques (smoothers)** 和 **recursive state estimators (filters)** 分别在3.1.2 MAP + 3.1.3 Bayesian 和  3.3 Kalman Filter
+
+Searching for: $\hat{x}$  (posterior).
+
+#### 3.1.3 Bayesian inference
+
+Base on the **Bayesian Rule** with joint & condition: 
+
+<img src="/img/in-post/ser/k3bayes1 - 副本.png" alt="k3bayes1 - 副本" style="zoom: 67%;" />
+
+we calculate the `prior` and the `observation` to get the `joint`.
+
+change x and y: 
+
+<img src="/img/in-post/ser/k3bayes2 - 副本.png" alt="k3bayes2 - 副本" style="zoom:67%;" />
+
+now based on the **Gaussian Inference** we can use `joint` to infer `posterior`
+
+1. **For the Prior:**
+
+   <img src="/img/in-post/ser/k3bayes3.png" alt="k3bayes3" style="zoom: 60%;" />
+
+2. **For the Observation:**
+
+   <img src="/img/in-post/ser/k3bayes4.png" alt="k3bayes4" style="zoom:50%;" />
+
+3. **For the Joint:**
+
+   <img src="/img/in-post/ser/k3bayes5.png" alt="k3bayes5" style="zoom: 50%;" />
+
+4. **For the Posterior:**
+
+   <img src="/img/in-post/ser/k3bayes6.png" alt="k3bayes6" style="zoom: 46%;" />
+
+
 
 #### 3.1.2 Maximum A Posteriori (MAP)
 
@@ -41,12 +75,114 @@ in batch estimation is to solve:
 
 <img src="/img/in-post/ser/k3map1.png" alt="k3map1" style="zoom: 80%;" />
 
-with Bayes' rule:
+with Bayes' rule: \<same as in 3.1.3\>
 
 <img src="/img/in-post/ser/k3map2.png" alt="k3map2" style="zoom: 67%;" />
 
-> here the denominator does not depend on x and the v in p(y\|x,v) does not affect y if x is known.
+by assuming noise variables are uncorrelated:
+
+<img src="/img/in-post/ser/k3map3.png" alt="k3map3" style="zoom: 67%;" />
+
+<img src="/img/in-post/ser/k3map4.png" alt="k3map4" style="zoom:67%;" />
+
+using log function to convert × into +:
+
+<img src="/img/in-post/ser/k3map5.png" alt="k3map5" style="zoom:67%;" />
+
+the component parts are:
+
+<img src="/img/in-post/ser/k3map6.png" alt="k3map6" style="zoom: 50%;" />
+
+here for example:
+
+<img src="/img/in-post/ser/k3map7.png" alt="k3map7" style="zoom:50%;" />
+
+give them into a log function:
+
+<img src="/img/in-post/ser/k3map8.png" alt="k3map8" style="zoom:67%;" />
+
+merge them together to get a **cost function** J(x):
+
+<img src="/img/in-post/ser/k3map9.png" alt="k3map9" style="zoom:67%;" />
+
+the same as 3.1.3.(4), rewrite the cost function in matrix way:
+
+<img src="/img/in-post/ser/k3map10.png" alt="k3map10" style="zoom:67%;" />
+
+now we calculat the x which reaches the minimum of J:<br/>we found that J(x) is a quadratic function:
+
+> ![k3map11](/img/in-post/ser/k3map11.png)
+>
+> 对于一维二次函数 找最小值就是 一阶导数等于0，二阶导数大于0。
+>
+> 对于高维二次函数 同理：
+>
+> 先对 **f(x+Δx)进行高维泰勒展开**如图:
+>
+> > <img src="/img/in-post/ser/k3taylor.png" alt="k3taylor" style="zoom: 80%;" />
+>
+> 再对**x+Δx 代入 f(x)**进行展开
+>
+> 比较系数可得泰勒展开中，Δx前的系数即为x的偏导数。
+>
+> 那么如果 f(x)是：
+>
+> <img src="/img/in-post/ser/k3map12.png" alt="k3map12" style="zoom: 48%;" />
+
+so 
+
+<img src="/img/in-post/ser/k3map13.png" alt="k3map13" style="zoom: 67%;" />
+
+we get the exact equtation as in 3.1.3.(4)
+
+<center> <font size=8>$(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$</font></center>
+
+---
+
+---
+
+**Now what?**
+
+#### to solve the equtation:
+
+1. **$A$ and $A^{-1}$**
+
+   <img src="/img/in-post/ser/k3calculate.png" alt="k3calculate" style="zoom: 50%;" />
+
+   > 1 下三角矩阵求逆
+   >
+   > 2 **Markov property**
+
+2. **$H^TW^{-1}h$**
+
+   <img src="/img/in-post/ser/k3calculate2.png" alt="k3calculate2" style="zoom: 50%;" />
+
+3. using **Cholesky factorization**: **$H^TW^{-1}h = LL^T$** with
+
+   <img src="/img/in-post/ser/k3calculate3.png" alt="k3calculate3" style="zoom:50%;" />
+
+4. reform
+
+   $(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$
+
+   $LL^T\hat{x}=H^{T}W^{-1}z$
+
+   **$Ld=H^{T}W^{-1}z$**  with **$L^T\hat{x}=d$**
+
+5. solve
+
+   **solve $Ld=H^{T}W^{-1}z$ for $d$ forward**
+
+   **solve $L^T\hat{x}=d$ for $x$ backward**
+
+#### Cholesky Solution
+
+#### RTS smoother
 
 
 
-...待续
+---
+
+---
+
+<img src="/img/in-post/ser/k3solution.png" alt="k3solution" style="zoom: 67%;" />
