@@ -21,6 +21,8 @@ typora-root-url: ..
 
 ### 3.1 Batch Discrete-Time Estimation
 
+#### 3.1.1 Setup
+
 for **linear, time-varying models**: we need
 
 a **motion model** and a **observation model**:
@@ -36,6 +38,8 @@ So <img src="/img/in-post/ser/k3model2.png" alt="k3model2" style="zoom: 75%;" />
 > 2. 分成 **batch linear-Gussain techniques (smoothers)** 和 **recursive state estimators (filters)** 分别在3.1.2 MAP + 3.1.3 Bayesian 和  3.3 Kalman Filter
 
 Searching for: $\hat{x}$  (posterior).
+
+---
 
 #### 3.1.3 Bayesian inference
 
@@ -67,7 +71,7 @@ now based on the **Gaussian Inference** we can use `joint` to infer `posterior`
 
    <img src="/img/in-post/ser/k3bayes6.png" alt="k3bayes6" style="zoom: 46%;" />
 
-
+---
 
 #### 3.1.2 Maximum A Posteriori (MAP)
 
@@ -133,9 +137,9 @@ so
 
 <img src="/img/in-post/ser/k3map13.png" alt="k3map13" style="zoom: 67%;" />
 
-we get the exact equtation as in 3.1.3.(4)
+we get the exact equation as in 3.1.3.(4)
 
-<center> <font size=8>$(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$</font></center>
+<center> <font size=5>$(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$</font></center>
 
 ---
 
@@ -143,7 +147,11 @@ we get the exact equtation as in 3.1.3.(4)
 
 **Now what?**
 
-#### to solve the equtation:
+### 3.2 Recursive Discrete-Time Smoothing
+
+#### 3.2.1 Exploiting Sparsity in the Batch Solution
+
+**to solve the equation:**
 
 1. **$A$ and $A^{-1}$**
 
@@ -157,7 +165,7 @@ we get the exact equtation as in 3.1.3.(4)
 
    <img src="/img/in-post/ser/k3calculate2.png" alt="k3calculate2" style="zoom: 50%;" />
 
-3. using **Cholesky factorization**: **$H^TW^{-1}h = LL^T$** with
+3. using  **[cholesky decomposition](https://yf96.github.io/2020/10/30/matrix/#cholesky-%E5%88%86%E8%A7%A3)** : **$H^TW^{-1}h = LL^T$** with
 
    <img src="/img/in-post/ser/k3calculate3.png" alt="k3calculate3" style="zoom:50%;" />
 
@@ -175,9 +183,15 @@ we get the exact equtation as in 3.1.3.(4)
 
    **solve $L^T\hat{x}=d$ for $x$ backward**
 
-#### Cholesky Solution
+---
 
-#### RTS smoother
+#### 3.2.2 Cholesky Smoother
+
+
+
+---
+
+#### 3.2.3 Rauch-Tung-Striebel (RTS) smoother
 
 
 
