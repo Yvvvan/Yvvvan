@@ -1,0 +1,104 @@
+---
+layout:     post
+title:      "机器人学中的状态估计-03"
+subtitle:   "卡尔曼滤波器详解"
+date:       2020-11-20
+author:     "Yvan"
+header-img: "img/in-post/rse-3.jpg"
+header-mask: 0.3
+no-catalog: false
+mathjax: true
+tags:
+    - SER
+typora-root-url: ..
+---
+
+# Estimation Machinery
+
+# K3 Linear-Gaussian Estimation - 2
+
+## 上回小结
+
+K3主要分析 `线性高斯系统(LG)`
+
+首先将LG系统抽象为`运动方程`和`观测方程`
+
+So <img src="/img/in-post/ser/k3model2.png" alt="k3model2" style="zoom: 67%;" />
+
+目的是求解: 系统状态 x, 即 $\hat{x}$ **后验的协方差和均值**。
+
+
+
+首先从两种角度入手 分别是 最大后验概率估计`MAP` 和 贝叶斯推断`Bayesian inference`
+
+> 这两种方法结果一样是因为 $\hat{x}$服从正态分布，均值处就是最大概率处。
+
+都得到了方程：
+
+<center> <font size=3>$(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$</font><br/><br/>
+$ z = \left[ \begin{matrix} v \\ y  \end{matrix}\right] \qquad H = \left[ \begin{matrix} A^{-1} \\ C  \end{matrix}\right]  \qquad W = \left[ \begin{matrix} Q & \\  & R  \end{matrix}\right]    $
+
+</center>
+
+解方程组首先使用了 `cholesky smoother` 最后得到了5个前向公式和1个后向公式
+
+<img src="/img/in-post/ser/k3hwh4.png" alt="k3hwh4" style="zoom:90%;" />
+
+基于`cholesky smoother`  使用`卡尔曼增益`，可以将这6个方程改写成 `RTS smoother` **先验协方差，先验均值，卡尔曼增益，前向后验协方差更新，前向后验均值更新，前向后验均值修正** 的形式
+
+<img src="/img/in-post/ser/k3rts15.png" alt="image-20201120223254186" style="zoom: 55%;" />
+
+## 这回内容
+
+上一页主要解决上述三四层关系的详细推导，这一页
+
+1 首先解决其中的一些细节，即： 关于方程 $(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$ 的 解。
+
+2 然后继续卡尔曼滤波器的内容。
+
+### 3.1.4 Existence, Uniqueness, and Observability
+
+$\hat{\mathbf{x}}=\left(\mathbf{H}^{T} \mathbf{W}^{-1} \mathbf{H}\right)^{-1} \mathbf{H}^{T} \mathbf{W}^{-1} \mathbf{z}$<br/>so it has a  unique solution if and only if $(H^{T}W^{-1}H) $ is invertible.<br/>and $\mathbf{x}$ is in shape (N(K+1),1) / $\operatorname{dim}{\mathbf{x}} = N(K+1)$     ($x_i \in R^N, \mathbf{x} = [x_0, x_1 ... x_k]^T$), so <br/>$\operatorname{rank}\left(\mathbf{H}^{T} \mathbf{W}^{-1} \mathbf{H}\right)=N(K+1)$<br/>and $\mathbf{W^{-1}}$ is invertible and positive definite. so we can drop it. That means<br/><center>$\hat{\mathbf{x}}$ is a unique solution $\rightleftharpoons \operatorname{rank}\left(\mathbf{H}^{T}\right)=N(K+1)$</center>
+
+In other words, we need N(K+1) linearly independent rows (or columns) in the matrix $\mathbf{H}^{T}$ .
+
+We now have two cases that should be considered:<br/>
+(i) We have good prior knowledge of the initial state, $\check{x}_0$.<br/>
+(ii) We do not have good prior knowledge of the initial state.<br/>
+
+#### case (i) with initial state
+
+write out $\mathbf{H^T} $ just like in 3.2.2.5. we will find out the matrix is in block-row-echelon from, which means full rank.
+
+<img src="/img/in-post/ser/k3rank1" alt="image-20201121001618163" style="zoom: 80%;" />
+
+$\operatorname{rank}\mathbf{H^T} = N(K+1)$
+
+and the solution is unique.
+
+#### case (ii) without initial state
+
+this means remove the **first column** in $\mathbf{H^T} $
+
+<img src="/img/in-post/ser/k3rank2" alt="image-20201121001655073" style="zoom:80%;" />
+
+moving the top row to the bottom:<br/><img src="/img/in-post/ser/k3rank4" alt="image-20201121001837632" style="zoom:80%;" />
+
+let the $\mathbf{A} $ part of the last row become $\mathbf{0} $ by adding $\mathbf{A_0^T} $  times first row to it, and then $\mathbf{A_0^T}\mathbf{A_1^T} $  times first row  .... <br/><img src="/img/in-post/ser/k3rank3" alt="image-20201121002332914" style="zoom:80%;" />
+
+the upper block is full rank of $NK$
+
+so if the bottom block is full rank of $N$, the solution is unique.
+
+<img src="/img/in-post/ser/k3rank5" alt="image-20201121003738590" style="zoom:80%;" />
+
+## 3.3 Recursive Discrete-Time Filtering
+
+0. 递归最小二乘法RLS <*RLS*和*卡尔曼滤波器*非常类似，那么区别是什么？>
+1. RTS的前向部分 即为卡尔曼滤波器
+   1. 经典形式 卡尔曼增益是修正的权重
+   2. 信息形式 信息矩阵是协方差矩阵的逆，即不用卡尔曼增益的形式
+2. 从MAP出发推导 （即 H W z 简化为 关于 k-1 和 k 时刻 的矩阵， 而非 从0到k时刻的矩阵）
+3. 从贝叶斯推断出发推导 （不通过HWHx=HWz, 直接从概率出发推导）
+4. 从gain optimization推导
+

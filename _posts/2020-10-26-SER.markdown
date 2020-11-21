@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-01"
-subtitle:   "这大约的确会有意思吧"
+subtitle:   "基础概率论"
 date:       2020-10-26
 author:     "Yvan"
 header-img: "img/in-post/rse-1.jpg"
