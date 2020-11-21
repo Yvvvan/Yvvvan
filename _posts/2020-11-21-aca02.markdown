@@ -1,0 +1,141 @@
+---
+layout:     post
+title:      "计算机体系结构-02"
+subtitle:   "MIPS, Pipeline and Instruction Scheduling"
+date:       2020-11-21
+author:     "Yvan"
+header-img: "img/in-post/aca-2.jpg"
+header-mask: 0.3
+no-catalog: false
+mathjax: true
+tags:
+    - ACA
+typora-root-url: ..
+typora-copy-images-to: ..\img\in-post\aca\02
+---
+
+# MIPS64
+
+> Folien 02 / Appendix A and K / Video 1.2.1 - 1.2.4
+
+- simple **load-store instruction set**
+  - Only load/store instructions access memory
+  - To process data, need to load it into register first
+- designed for pipelining efficiency
+  - Fixed instruction set encoding
+- efficient instruction set for compiler to target
+
+### Registers
+
+- has 32 64-bit **general-purpose registers (GPRs)** R0 - R31
+  - R0 is a hardwired 0
+- has 32 64-bit **floating-point registers (FPRs)** F0 - F31
+  - to hold a 32-bit single precision floating point or 64-bit double precision floating point
+  - when used as single precision float, half of FPR is unused
+- few special registers
+  - hi and lo:
+    - eg. for multiply: n bit * n bit = 2n bit which can not be placed in a n bit register
+  - floating-point status register
+  - exception program counter
+
+### Data Types
+
+- Integer:
+
+  - 8-bit: bytes (char)
+
+  - 16-bit: half words (short, Unicode)
+
+  - 32-bit: words (only in mips)
+
+  - 64-bit: double words 
+
+    - 32-bit to 64-bit:
+
+      to increase the amount of directly addressable memory
+
+- Operations process 64-bit integers
+
+  - 如果使用bytes等小于64位的integer，需要用zero extended或sign extended转换成64位integer
+
+    - zero extended：
+
+      free positions are filled with zeros
+
+    - sign extended：
+
+      a sign bit will be copied into the free position
+
+- Floating-point
+
+  - 32-bit single-precision (float)
+  - 64-bit double-precision (double)
+
+### Addressing Modes
+
+<img src="/img/in-post/aca/02/image-20201121220036543.png" alt="image-20201121220036543" style="zoom:80%;" />
+
+- Mode bit specifies:
+
+  - Big Endian
+
+  - Little Endian
+
+    <img src="/img/in-post/aca/02/280px-Big-Endian.svg.png" alt="Big-Endian.svg" style="zoom: 67%;" />
+
+  
+
+### Instruction Formats
+
+- 32 bits long
+
+- R type: \<Register direct\>
+
+- I type: \<Immediate\>
+
+  - sign extended
+
+- J type:
+
+  - 26 bits instruction address
+  - 地址是32位，但Operations process 64-bit integers
+  - When a J-type instruction is executed, a full target address is formed by concatenating the high order bits of the PC (the address of the instruction following the jump), the 26 bits of the target field, and 2 zero bits.
+  - 26 bits of the target field
+  - 2 zero bits：因为地址/指令地址是对齐的(4Bytes 32bits) 最后2bits可以省略 (相当于除以4/右移2位)
+  - high order bits of the PC: 指令只接受64位输入，也就是说28-63位的值由当前PC提供 (即 $(PC+4)_{63..28}$）
+
+  <img src="/img/in-post/aca/02/image-20201121221733330.png" alt="image-20201121221733330" style="zoom: 67%;" />
+
+### Basic Code Optimization
+
+- Eliminating redundant branches
+- Eliminating induction variables
+- Loop unrolling
+
+---
+
+# Pipelining
+
+> Folien 03 / Appendix C.1 / Video 1.3.1 - 1.3.7
+
+### Classical 5-Stage Pipeline
+
+- **IF**: Instruction fetch
+- **ID**: Instruction decode
+- **EX**: Execute
+- **MEM**: Memory access
+- **WB**: Write-back cycle
+
+### Advantage:
+
+- all MIPS instructions same length
+- few instruction formats, source registers always in same place
+- only loads and stores access memory (MIPS is load/store architecture)
+
+### Hazard:
+
+- **structural hazards**: HW cannot support parallel execution of instructions
+- **data hazards**: instr. depends on result of prior instr. still in the pipeline
+- **control hazards**: delay between fetching control flow instruction (branch
+  or jump) and actual jump
+
