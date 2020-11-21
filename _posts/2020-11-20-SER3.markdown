@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-03"
-subtitle:   "卡尔曼滤波器详解"
+subtitle:   "LG系统下卡尔曼滤波器"
 date:       2020-11-20
 author:     "Yvan"
 header-img: "img/in-post/rse-3.jpg"

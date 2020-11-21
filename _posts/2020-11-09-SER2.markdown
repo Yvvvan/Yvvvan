@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-02"
-subtitle:   "LG系统"
+subtitle:   "LG系统下Smoother"
 date:       2020-11-09
 author:     "Yvan"
 header-img: "img/in-post/rse-2.jpg"
