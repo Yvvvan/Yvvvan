@@ -102,3 +102,6 @@ so if the bottom block is full rank of $N$, the solution is unique.
 3. 从贝叶斯推断出发推导 （不通过HWHx=HWz, 直接从概率出发推导）
 4. 从gain optimization推导
 
+---
+
+待续

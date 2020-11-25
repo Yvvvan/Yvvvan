@@ -139,3 +139,6 @@ typora-copy-images-to: ..\img\in-post\aca\02
 - **control hazards**: delay between fetching control flow instruction (branch
   or jump) and actual jump
 
+---
+
+待续
