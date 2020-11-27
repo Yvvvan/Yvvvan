@@ -1,0 +1,234 @@
+---
+layout:     post
+title:      "Safety for Automated Driving"
+subtitle:   "SaFAD延伸 -- Safe State"
+date:       2020-11-24
+author:     "Yvan"
+header-img: "img/in-post/ves-ad/a.jpg"
+header-mask: 0.3
+no-catalog: false
+mathjax: true
+tags:
+    - Automated Driving
+typora-root-url: ..
+typora-copy-images-to: ..\img\in-post\ves-ad\02
+---
+
+> SaFAD 2.1.7 中讲了最低风险状况MRC和最低风险策略MRM。是指当某功能出现故障(进入非安全状态)时，启动最低风险策略MRM，将汽车带入新的**安全状态**MRC。
+>
+> 本文关注**三份文献**对于Safe State的理解。[ 看完才发现两份论文的作者是同一个人 : )  ]
+>
+> 文1和文2更关注理论部分，文3更关注建模。
+
+## Safe State 1
+
+> 本节将关注 **[Autonomous Driving](https://link.springer.com/book/10.1007/978-3-662-48847-8)** 一书中 第23章 **[Safety Concept for Autonomous Vehicles](https://link.springer.com/chapter/10.1007%2F978-3-662-48847-8_23)** 的内容。
+
+### 定义
+
+**安全状态**：指**当前和未来**的风险值在可接受阈值以下的状态
+
+**风险值**：是**事故发生概率与人员受伤程度**的组合
+
+**可接受阈值**：取决于车辆当前状态<br/>        - 所有相关的运动和静止的物体<br/>        - 运动物体的意图(包括本车)<br/>        - 相关的法律要求<br/>        - 本车的任务<br/>        - 本车在当下的动力情况
+
+因此，对于自动驾驶的汽车，当前的风险值因不断地根据当前的状况与可接受风险阈值进行比较。
+
+> 此书此章节作者认为**最低风险**一词是不精确的表达，它没有将风险和阈值联系起来，即没有说明最低风险是否是安全状态。
+
+> 原文摘取 [1]:
+>
+> A **`safe state`** is only present when the **current and future risk** is **below a `threshold`** accepted in society.
+>
+> **`Risk`** is to be understood as a **combination** of the **probability of occurrence** and the **severity of the personal injury**.
+>
+> The **level of acceptable risk (`threshold`)** depends on the **current situation** of the vehicle. The situation includes the following:<br/>
+> – All **stationary and dynamic objects** relevant to a driving decision<br/>
+> – The **intention of the dynamic objects** including the autonomous vehicle<br/>
+> – The pertinent **legal** conditions<br/>
+> – The **mission** of the autonomous vehicle<br/>
+> – The **current power capability** of the autonomous vehicle.<br/>
+>
+> Therefore, for an autonomous vehicle, the **current risk must be continuously determined** on the basis of the current situation and a comparison of the risk with the threshold value that is regarded as still just about acceptable.
+
+### 其他行业中的安全状态
+
+> 本书列举了一些其他行业中的安全状态，包括阈值设定、传感器检测等。具有借鉴意义。
+
+### 用例和总结 
+
+> 用例来自本书**第2章** 在第2章做了详细介绍 在这边总结了各用例下的哪些行为属于安全状态
+
+对四个用例的研究表明，安全状态面临的最大挑战是**较高的相对速度**、**缺乏安全驾驶员**以及**阻塞紧急车辆通道和紧急逃生路径**。检查这些方面可以满足车辆的安全要求:
+
+- 自动驾驶车辆必须了解其**当前性能**。
+- 自动驾驶汽车必须了解它在当前的情况下的**当前功能限制**。
+- 自动驾驶汽车必须始终**在对乘客和其他道路使用者合理的风险水平下运行**。
+
+- 停在**路肩或路边且不阻碍交通**的车辆处于安全状态。
+- 停在**车道**上的车辆只有在满足以下所有条件的情况下才处于安全状态:
+  - 与其他道路使用者的**相对速度低于**尚待确定的最大速度。
+  - 静止车辆**未阻塞**紧急车辆通行路线或紧急逃生路径。
+  - 安全驾驶员或远程**操作人员**可以在**短时间**内**将车**辆从这个位置**移走**。
+  - 安全驾驶员可以确保车辆安全(secure the vehicle)。
+- 在高度**危险**的情况下行驶的车辆或在危险地点停滞不前的车辆必须能够**发出紧急信号并请求帮助**。
+
+> 前三点是对当前状况的判断，后三点是对当前/未来位置的判断。
+
+### 安全相关事件
+
+一方面**车辆导航系统的技术缺陷和故障**降低了其表现能力，另一方面**环境条件的改变**、**车辆导航系统负担过重的情况**、**其他道路使用者的不正确行为** 和 **不可抗行为** 增加了对车辆导航系统的要求。能力降低和需求增加的组合可能导致更高级别的风险。
+
+> 即体现了 功能安全 与 预期功能安全安全 的基础要求。
+
+### 降低风险措施
+
+自动驾驶车辆应该总是**在可接受的风险水平下运行**，并且应该尽可能**拓宽功能范围**。执行行为是作为一个对安全相关事件的反应，**将风险降低到一个可接受的水平**(比如出现情况要应对)，或**保持这种水平的同时实现更高的功能范围**(比如开车上高速然后启动了自动巡航)。降低驾驶速度、增加与附近车辆的距离、安全优化驾驶机动规划、禁止某些驾驶机动、执行安全机动都是可能的。
+
+**降级(graceful degradation) **指在一个系统中发生错误或资源有限，则维护重要进程，并缩减或结束其他不太重要的进程。例如，如果视野受到限制，车辆的速度就会降低。然而，在某些情况下，即使执行这些行动也不能将风险降低到可接受的水平，这意味着有必要停车，或者如果停车风险太大，就会离开车流。通过降级，不仅需要**达到或维持安全状态**，还需要**通过使用自我修复和重新配置机制来提高性能**。在技术系统中，重新启动组件是一种广泛使用的恢复性能的措施。重新启动需要时间，并且，根据系统结构的不同，**重新启动**一个组件也可能意味着重新启动或至少重新初始化其他组件。因此，**安全关键组件**通常具有(不同的)*冗余设计*。除了冗余之外，还可以恢复单个组件的功能。传感器和执行器可以**重新校准**以改善其测量值，或者根据当前情况进行**设定点调整**。重新配置机制可用于整个系统，即使在发生风险增加事件后仍能安全运行。重新配置机制可用于整个系统，保障即使在发生风险增加事件后仍能安全运行。
+
+### 困境
+
+如果当前的事件不造成人身伤害就无法解决，自动车辆必须选择一种可能的行动方式，即使它会造成人身伤害，这也会是造成最小的损失的措施。在评估可能的不确定性时，必须考虑到车上的乘客数量和其他道路使用者的类型和动态。在这里，**与其他道路使用者的沟通**尤其重要，可以帮助以最少的人身伤害解决这种情况。
+
+> 最低风险策略在必要时可能违法，可能造成财产损失，可能造成人身伤害。应根据优先度进行合理安排。
+
+<img src="/img/in-post/ves-ad/02/image-20201126223014730.png" alt="image-20201126223014730" style="zoom:67%;" />
+
+> 上图显示了当行人从无法探知的区域进入车道情况
+>
+> 在situation2中，无论何种操作(Op2-Op4)选择，都不能确定行人是否会因该操作而避免受伤。这时系统会选择按照伦理原则进行操作。关于伦理原则见本书**第4章**。
+>
+> 而如果可以与对向车辆进行通信，两辆车可以一起找到解决办法。在这种情况下，两辆车都必须越过，因此都会违反道路交通规则。
+
+
+
+## Safe State 2
+
+> 本节将关注 **[Conditions for a safe state of automated road vehicles](https://www.researchgate.net/publication/282564618_Conditions_for_a_safe_state_of_automated_road_vehicles)** 一文
+>
+> 结论 和上文是同一作者，内容基本相同
+
+### Safety
+
+Safety 是一种相对措施，取决于不同情况中每个涉及对象的个人感知。
+
+ISO 26262标准将安全状态定义为“系统或系统阵列的没有不合理的风险的运行模式”  即 “风险低于不合理的水平，则系统是安全的”，其中风险是**损害发生概率和损害严重程度的组合**。不合理的风险是“根据有效的社会道德观念在某些情况下被判定为不可接受的风险” ，伤害是“人身伤害或健康损害” 。所以，如果当前的操作风险低于可能发生的伤害和损害人身健康的水平，则维持安全状态。
+
+合理的操作风险(误操作)不是用户和其他流量参与者的责任，而是制造商的责任。
+
+> iso21448 定义**预期功能安全**包括考虑**预期功能不足**或**可预见的人员误操作**。
+
+#### Safety State
+
+<img src="/img/in-post/ves-ad/02/image-20201126235006814.png" alt="image-20201126235006814" style="zoom:67%;" />
+
+操作的安全状态 Safety State：the functional capabilities are higher than the functional requirements
+
+最小风险状态 risk-minimal state：当前能力和此操作能力需求之间的差异最大的状态，因此所产生的风险最小。
+
+### Safety-critical Events
+
+在自动驾驶中，因为风险经常变化，需要将风险评估集成到系统中。一边将当前风险与设定的风险级别进行比较，以及预测当前情况的风险发展情况。(现在+未来)
+
+车辆导航系统必须确定自己的能力，并从当前状况及其发展中得出必要的能力需求。(capabilities+requirements)
+
+以下事件可能会影响车辆导航系统的风险和能力。（同上文**安全相关事件**）
+
+### 用例
+
+> 这部分 也和上文 **用例** 是相同的，既然上面没怎么写，这边稍微描述一下。
+
+<font size = 4>**L0 - L2**</font>
+
+SAE 0-2级的系统中，车辆系统必须由驾驶员进行监控。<br/>**安全状态**：驾驶员控制或至少要求驾驶员控制车辆。自动停用系统并向驾驶员发出信号，或者驾驶员可以通过干预系统的执行来获得控制权<br/>在大多数情况下，交给驾驶员是足够的。唯一的例外是驾驶员失去知觉或无驾驶员，即无法立即接管控制权。在这种情况下，车辆将滑行，在短时间内或完全失控。这是可以接受的情况，是因为L0-L2的辅助功能定义为仅辅助而不是完全自动行驶的车辆，所以保持安全状态的第一个动作是将控制权移交给可用的驾驶员。
+
+
+
+<font size = 4>**L3**</font>
+
+SAE 3级的系统中，不需要驾驶员对车辆系统和交通状况进行永久监控。车辆可以提出向驾驶员移交控制权的请求，但驾驶员不被强制要求接收控制权。因此，<br/>**安全状态**：如果驾驶员不接收控制权，一段时间或风险增加后，车辆应采取相应措施，使其保留在安全状态中。<br/>STOP：如果因为堵车而自动停车，是安全的。但堵车恢复后，如果在高速公路场景下，则会进入不安全状态。在高速状态下，紧急制动不是安全状态，需要进行受控停车*,停车后需要驾驶员接管或根据法规对车辆进行保护（如果驾驶员不能再开车，需要打开双闪灯，有人放置警示牌等）。<br/>
+
+>  < **Stop Category 0**: Stopping by immediate removal of power to the machine actuators (i.e. an uncontrolled stop – stopping of machine motion by removing electrical power to the machine actuators)<br/>< **Stop Category 1**: A controlled stop (stopping of machine motion with electrical power to the machine actuators maintained during the stopping process) with power available to the machine actuators to achieve the stop and then removal of power when the stop is achieved <br/>< **Stop Category 2**: A controlled stop with power left available to the machine actuators 
+
+但这部分并未在SAE L3系统做出要求中。
+
+<font size = 4>**L4**</font>
+
+SAE 4级的系统中，不依赖人类驾驶员作为后备解决方案，但仍然受限于某些情况。<br/>**安全状态**：驾驶员处于控制之中，或者车辆对他人及其乘客没有危险。<br/>
+STOP：如果在车道上自动停车是不安全的，则需要离开车队后再停车，并且不堵塞应急车道与逃生通道，并且其他交通参与者可以观察到此车的状态。另一个选择是根据系统的内部条件或外部条件（功能降级）以减少的功能继续运行。车辆导航系统会根据内部和外部情况更改驾驶参数，例如速度，碰撞时间以及纵向和横向安全距离。
+
+<font size = 4>**L5**</font> 
+
+SAE 4级的系统中，不要求人工驾驶。<br/>**安全状态**：车辆需要在各种情况下都保留或者到达安全状态。<br/>STOP：仅在不必根据交通规则对车辆进行保护的情况下，无人驾驶停止才是安全的（完全没人的话，没人防止警示牌。L4的要求适用于此处。
+
+
+
+###  Conditions to a safe state
+
+1. The vehicle is controlled by a driver. 
+2. The vehicle is controlled by Teleoperation via Vehicleto-Operator communication.
+3. The vehicle is driving automatically within its functional boundaries, especially with safe speed and adequate safety distances.
+4. The vehicle is stopped under the following conditions: 
+  - Relative speeds to other traffic participants are below a certain level. 
+  - The vehicle and its state are visible to other traffic participants. 
+  - The vehicle is not blocking emergency vehicles or emergency routes.
+
+
+
+## Safe State 3
+
+> 本节将关注 [Reaching Safe States in Autonomous Road Vehicles](https://www.researchgate.net/publication/305478045_Reaching_Safe_States_in_Autonomous_Road_Vehicles) 一文
+
+本文关注：**manned road vehicles** in road traffic with an **autopilot** (AP) feature
+
+安全状态要求：The vehicle under consideration can always reach a safe state given a specific operational situation.
+
+控制系统架构：a sensor subsystem, an actuator subsystem, and software-driven
+networked computing units
+
+<img src="/img/in-post/ves-ad/02/image-20201127010328508.png" alt="image-20201127010328508" style="zoom: 67%;" />
+
+### Modeling the Road Vehicle Domain
+
+#### Modeling Abstract Vehicle Behavior
+
+状态图：a transition system ($\Sigma$; $\Delta$) with state space $\Sigma$ and transition relation $\Delta$.  
+
+状态集$\Sigma$的子集 运行状态集$os$，抽象为三个状态，$O$ 是所有$os$的集合。转移集$\Delta$包含三种系统行为*unsafe*，*comp*，*-comp*(转移包含驾驶员、车辆、道路的行为)。从车辆的角度，*unsafe* 代表系统内部错误，*comp*代表任何安全的措施(比如系统降级)
+
+<img src="/img/in-post/ves-ad/02/image-20201127010758477.png" alt="image-20201127010758477" style="zoom: 80%;" />
+
+#### Modeling the State Space of the Vehicle Domain
+
+1. define the state space $\Sigma$ using the following parameter vector $\vec{c}$
+
+   - $c_{driver}$: physical presence, consciousness
+
+   - $c_{road}$: daylight, weather, traffic, road
+
+   - $c_{veh}$: speed, location, fault conditions
+
+      $\Sigma  = T(c_{driver} )  T(c_{road} )  T(c_{veh} ) $ where T returns the type of $\vec{c}$ ’s components
+
+2. the following functions of type $O \rightarrow R$ determine timing parameters important for our strategy analysis
+
+   - $t_{react}$ (driver reaction): est. time to take over control,
+   - $t_{esc}$ (escalation time): est. time to hand over control,
+   - $t_{loss}$ (control loss): estimated time till loss of control.
+
+### Safe, Haezardous, and Mishap States
+
+---
+
+待续
+
+---
+
+引用：
+
+[1] Reschka A. (2016) *Safety Concept for Autonomous Vehicles*. In: Maurer M., Gerdes J., Lenz B., Winner H. (eds) Autonomous Driving. Springer, Berlin, Heidelberg. 
+
+[2] Reschka, Andreas & Maurer, Markus. (2015). *Conditions for a safe state of automated road vehicles*. it - Information Technology. 57. 10.1515/itit-2015-0004. 
+
+[3] Gleirscher, Mario & Kugele, Stefan. (2016). *Reaching Safe States in Autonomous Road Vehicles.* Computer Safety, Reliability and Security -- 35th Int. Conf. (SAFECOMP) Trondheim, Norway
