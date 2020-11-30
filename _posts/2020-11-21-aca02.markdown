@@ -212,7 +212,7 @@ for example:
 
 ### MIPS R4000
 
-Folien 03 / Appendix C.6 / Video 1.4.3
+> Folien 03 / Appendix C.6 / Video 1.4.3
 
 <img src="/img/in-post/aca/02/image-20201130122030080.png" alt="image-20201130122030080" style="zoom: 50%;" />
 
