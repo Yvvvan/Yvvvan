@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      "Safety for Automated Driving"
+title:      "Safety for Automated Driving-02"
 subtitle:   "SaFAD延伸 -- Safe State"
-date:       2020-11-24
+date:       2020-11-26
 author:     "Yvan"
 header-img: "img/in-post/ves-ad/a.jpg"
 header-mask: 0.3
@@ -18,7 +18,7 @@ typora-copy-images-to: ..\img\in-post\ves-ad\02
 >
 > 本文关注**三份文献**对于Safe State的理解。[ 看完才发现两份论文的作者是同一个人 : )  ]
 >
-> 文1和文2更关注理论部分，文3更关注建模。
+> 是[第1部分](#Safe State 1)和[第2部分](#Safe State 2)更关注理论定义部分，[第3部分](#Safe State 3)更关注建模。
 
 ## Safe State 1
 
@@ -111,7 +111,7 @@ typora-copy-images-to: ..\img\in-post\ves-ad\02
 
 > 本节将关注 **[Conditions for a safe state of automated road vehicles](https://www.researchgate.net/publication/282564618_Conditions_for_a_safe_state_of_automated_road_vehicles)** 一文
 >
-> 结论 和上文是同一作者，内容基本相同
+> 结论：和上文是同一作者，内容基本相同
 
 ### Safety
 

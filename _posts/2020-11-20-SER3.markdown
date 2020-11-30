@@ -13,7 +13,7 @@ tags:
 typora-root-url: ..
 ---
 
-# Estimation Machinery
+# Estimation `Machinery`
 
 # K3 Linear-Gaussian Estimation - 2
 
@@ -36,9 +36,7 @@ So <img src="/img/in-post/ser/k3model2.png" alt="k3model2" style="zoom: 67%;" />
 都得到了方程：
 
 <center> <font size=3>$(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$</font><br/><br/>
-$ z = \left[ \begin{matrix} v \\ y  \end{matrix}\right] \qquad H = \left[ \begin{matrix} A^{-1} \\ C  \end{matrix}\right]  \qquad W = \left[ \begin{matrix} Q & \\  & R  \end{matrix}\right]    $
-
-</center>
+$ z = \left[ \begin{matrix} v \\ y  \end{matrix}\right] \qquad H = \left[ \begin{matrix} A^{-1} \\ C  \end{matrix}\right]  \qquad W = \left[ \begin{matrix} Q & \\  & R  \end{matrix}\right]    $ </center>
 
 解方程组首先使用了 `cholesky smoother` 最后得到了5个前向公式和1个后向公式
 
