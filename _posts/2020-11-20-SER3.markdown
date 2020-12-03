@@ -11,9 +11,10 @@ mathjax: true
 tags:
     - SER
 typora-root-url: ..
+typora-copy-images-to: ..\img\in-post\ser
 ---
 
-# Estimation `Machinery`
+# Estimation Machinery
 
 # K3 Linear-Gaussian Estimation - 2
 
@@ -90,16 +91,195 @@ so if the bottom block is full rank of $N$, the solution is unique.
 
 <img src="/img/in-post/ser/k3rank5" alt="image-20201121003738590" style="zoom:80%;" />
 
-## 3.3 Recursive Discrete-Time Filtering
+### 3.3 Recursive Discrete-Time Filtering
 
-0. 递归最小二乘法RLS <*RLS*和*卡尔曼滤波器*非常类似，那么区别是什么？>
-1. RTS的前向部分 即为卡尔曼滤波器
+0. 递归最小二乘法RLS <*RLS*和*卡尔曼滤波器*非常类似> (会用在4中运用)
+1. RTS的前向部分 即为卡尔曼滤波器 **最好先把上一次的RTS看懂**
    1. 经典形式 卡尔曼增益是修正的权重
    2. 信息形式 信息矩阵是协方差矩阵的逆，即不用卡尔曼增益的形式
 2. 从MAP出发推导 （即 H W z 简化为 关于 k-1 和 k 时刻 的矩阵， 而非 从0到k时刻的矩阵）
 3. 从贝叶斯推断出发推导 （不通过HWHx=HWz, 直接从概率出发推导）
 4. 从gain optimization推导
 
----
+#### 0. RLS
 
-待续
+<img src="/img/in-post/ser/image-20201203114535970.png" alt="image-20201203114535970" style="zoom: 67%;" />
+
+> 求J的最小值，就是二次函数最小值，J导=0 得到 xi
+
+<img src="/img/in-post/ser/image-20201203121118383.png" alt="image-20201203121118383" style="zoom:67%;" />
+
+> 令P的逆等于x中第一项，把其中Ai写成[Ai-1，Fi]的形式，得到Pi的逆递归式。
+>
+> 用SMW恒等式整理（Pi的逆递归式的逆），得到Pi的递归式。
+
+<img src="/img/in-post/ser/image-20201203121405794.png" alt="image-20201203121405794" style="zoom:67%;" />
+
+> 用 Γ， K替换 得到 第4式 Pi
+>
+> 再推导以下Ki和Pi的关系 见下方
+>
+> 第3个式子 xi的推导见下下方
+
+<img src="/img/in-post/ser/image-20201203124010890.png" alt="image-20201203121405794" style="zoom: 60%;" />
+
+<img src="/img/in-post/ser/image-20201203122249179.png" alt="image-20201203121405794" style="zoom:67%;" />
+
+> xi 是 最开始得到的结论（1.2）
+>
+> 用之前假设的Pi去替换
+>
+> 把 Ai bi 都拆开，为了递归，并且乘出来
+>
+> Pi的递归式代入
+>
+> 发现了Pi-1Ai-1bi-1就是1.2中的xi-1 （递归起来了）
+>
+> 代入Ki-Pi的结论 整理
+>
+> 得到递归式
+
+
+
+#### 2. MAP
+
+> 考虑k-1时刻和k时刻的关系
+
+<img src="/img/in-post/ser/image-20201203152937466.png" alt="image-20201203152937466" style="zoom: 67%;" />
+
+<img src="/img/in-post/ser/image-20201203155229388.png" alt="image-20201203155229388" style="zoom: 67%;" />
+
+<img src="/img/in-post/ser/image-20201203153043013.png" alt="image-20201203153043013" style="zoom: 67%;" />
+
+1. 代入
+
+   ​	<img src="/img/in-post/ser/image-20201203155448446.png" alt="image-20201203155448446" style="zoom: 67%;" />
+
+2. 消去 后验x'k-1
+
+   > 用舒尔补进行消去：
+   >
+   > ​	可以直接从Ax+By=a,Cx+Dy=b入手 写出 Ky=d
+   >
+   > ​	也可以用求舒尔补的矩阵打洞过程把2,1位置变成0 得到 Ky=d
+
+   <img src="/img/in-post/ser/image-20201203182541858.png" alt="image-20201203182541858" style="zoom: 33%;" />
+
+3. 后验xk
+
+   > PPT中标记的大括号有问题 应不包含CRC那一项
+   >
+   > 使用的是SMW第一式
+
+   <img src="/img/in-post/ser/image-20201203182613348.png" alt="image-20201203182613348" style="zoom: 33%;" />
+
+4. 定义 先验xk，先验Pk，后验Pk
+
+   <img src="/img/in-post/ser/image-20201203190054135.png" alt="image-20201203190054135" style="zoom: 50%;" />
+
+5. 代入得到
+
+   <img src="/img/in-post/ser/image-20201203190209140.png" alt="image-20201203190209140" style="zoom:50%;" />
+
+   > 即`信息形式`的RTS前向部分
+   
+6. 加入卡尔曼增益 K
+
+   > 具体方法可以看上一次的RTS部分。这边有很多代入方法。
+
+   <img src="/img/in-post/ser/image-20201203192049522.png" alt="image-20201203192049522" style="zoom: 67%;" />
+
+   > 得到 `经典形式` 的卡尔曼滤波器
+   >
+   > 
+   >
+   > 意义： 
+   >
+   > 1. k-1时刻的后验  -- system dynamics ->    k时刻的先验：
+   >
+   >    是根据 输入 和 k-1时刻的**估计**状态 做出的**猜测**
+   >
+   >    输入 input **v**
+   >
+   >    输入噪音 process noise w ~ N(0,**Q**)
+   >
+   > 2. k时刻的先验 -- measurment model ->    k时刻的后验:
+   >
+   >    是根据 **测量** 和 k时刻的猜测 做出的最后修正**估计**结果
+   >
+   >    测量 mesurment **y**
+   >
+   >    测量噪音 mesurment noise n~ N(0,**R**)
+   >
+   >    y-Cx 是实际测量和理论测量的差 = 一个修正
+   >
+   > 
+   >
+   > 卡尔曼增益 kalman gain : 
+   >
+   > how much you want to take the prediction in account. if **R** is very large,  so the measurement is very uncertain, so we get a smaller K. that means we don't trust the measurement. 
+   >
+   > 
+   >
+   > 协方差：与输入和测量无关，所以每次都只需要求均值即可。
+
+
+
+#### 3. Bayesian Law
+
+> 先算Prior
+>
+> 先验均值，和上一回的时候一样的做法，简化一下。
+>
+> 先验协方差，和上回测量协方差的步骤差不多。
+>
+> > 下图 
+> >
+> > k-1时刻: 在 一串到k-1时刻的输入和测量 条件下的 计算 就是**估计** 是 后验k-1
+> >
+> > k时刻: 比上一个k-1多了一个k时刻的输入 这时的计算 是**猜测** 是先验k
+> >
+> > k的先验和MAP中一样
+
+<img src="/img/in-post/ser/image-20201203215659116.png" alt="image-20201203215659116" style="zoom: 67%;" />
+
+<img src="/img/in-post/ser/image-20201203214421376.png" alt="image-20201203214421376" style="zoom: 67%;" />
+
+> 然后算Joint Probability 和上一次一样
+>
+> 接着是用高斯推断算Posterior 和上次一样
+
+<img src="/img/in-post/ser/image-20201203220820716.png" alt="image-20201203220820716" style="zoom: 55%;" />
+
+<img src="/img/in-post/ser/image-20201203221047919.png" alt="image-20201203221047919" style="zoom: 55%;" />
+
+#### 4. Gain Optimization
+
+> 假设 后验(修正过的估计) 是 先验(猜测) + 修正(测量修正) * 修正的比例(K)
+>
+> 也就是我们先假设了 后验xk = 先验xk + Kk(yk-Ck*先验xk) 这个式子
+>
+> 然后我么找最合适的K
+
+<img src="/img/in-post/ser/image-20201203223726946.png" alt="image-20201203223726946" style="zoom:50%;" />
+
+> 用cost function
+>
+> 先定义偏差时 后验x(修正过的估计) - 实际
+
+<img src="/img/in-post/ser/image-20201203223621725.png" alt="image-20201203223621725" style="zoom:50%;" />
+
+<img src="/img/in-post/ser/image-20201203223550838.png" alt="image-20201203223550838" style="zoom:50%;" />
+
+#### 卡尔曼滤波器
+
+<img src="/img/in-post/ser/image-20201203224833279.png" alt="image-20201203224833279" style="zoom:67%;" />
+
+#### 最优线性无偏估计(BLUE)
+
+<img src="/img/in-post/ser/image-20201203230620866.png" alt="image-20201203230620866" style="zoom:67%;" />
+
+<img src="/img/in-post/ser/image-20201203230639819.png" alt="image-20201203230639819" style="zoom:67%;" />
+
+<img src="/img/in-post/ser/image-20201203230705605.png" alt="image-20201203230705605" style="zoom: 67%;" />
+
