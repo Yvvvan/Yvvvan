@@ -317,9 +317,7 @@ That is to calculate p(y):
 
 ![nclinear4](/img/in-post/ser/nclinear4.png)
 
-> 推导证明这么麻烦，但结论缺和简单的推论差不多的。相当于 $y = G(x)+R$的线性变换。。。佛
-
-<center><font size=6>$y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(g(\mu_x), R+G\Sigma_{xx}G^T)$</font></center>
+<center><font size=5>$y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(g(\mu_x), R+G\Sigma_{xx}G^T)$</font></center>
 
 #### 2.2.9 Shannon Information of GPDF
 
