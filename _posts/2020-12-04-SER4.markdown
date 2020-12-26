@@ -40,7 +40,7 @@ typora-copy-images-to: ..\img\in-post\ser\04
 
 0. 问题setup
 1. **贝叶斯滤波器**： 基于贝叶斯公式，只是理想的数学模型。
-2. **扩展卡尔曼**：线性变化以后代入贝叶斯滤波器。
+2. **扩展卡尔曼**：线性化以后代入贝叶斯滤波器。
 3. **迭代扩展卡尔曼**：
 
 ---
@@ -117,8 +117,9 @@ the conditional PDF of future states of the process, given the present state, de
 <center>
 $p(x \mid y,z) = $ <font size=5> $\frac{p(y \mid x,z) \cdot p(x \mid z)}{p(y\mid z)} $</font><br/>
 here,   $x = x_k \qquad \qquad  y = y_k \qquad \qquad z = x_0, v_1:v_k,y_0:y_{k-1}$<br/>
-其中p(y|z)是常数，因为当前的测量之和当前状态有关和{输入,之前的测量,之前的状态}无关。
+其中p(y|z)是常数，因为当前的测量只和当前状态有关,和{输入,之前的测量,之前的状态}无关。
  </center>
+
 
 **第二步**：计算p(x\|z)
 
@@ -180,6 +181,10 @@ $x$实现递归推导。
 4. 运动和观测方程的线性化取在如下两个点上：
 
    <img src="/img/in-post/ser/04/image-20201214012227971.png" alt="image-20201214012227971" style="zoom:50%;" />
+
+#### (i) 线性化
+
+
 
 ---
 
