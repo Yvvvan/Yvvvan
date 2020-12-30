@@ -6,7 +6,7 @@ plugins: [jekyll-paginate]
 title: Yvan 便利店
 SEOTitle: 予烦的博客 | Yvan Blog
 header-img: img/home-bg.png
-email: corban.donne@gmail.com
+email: yf.dong@outlook.de
 description: ""
 keyword: ""
 url: "http://YF96.github.io"              # your host, for absolute URL
@@ -72,11 +72,6 @@ gitalk: 8848d2f2b987ba22cfb7
 # Analytics settings
 # Baidu Analytics
 # ba_track_id: [your track id]
-
-# Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
-
 
 
 # Sidebar settings
