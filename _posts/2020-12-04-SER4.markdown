@@ -39,13 +39,21 @@ typora-copy-images-to: ..\img\in-post\ser\04
 ## 这回内容
 
 0. 问题setup
-1. [**贝叶斯滤波器**](#Bayes Filter)：基于贝叶斯公式，只是理想的数学模型。
-2. [**扩展卡尔曼**](Extended Kalman Filter)：线性化以后代入贝叶斯滤波器。
-3. [**高斯滤波器**](#Gaussian Filter)：
-4. **迭代扩展卡尔曼**：
-5. **粒子滤波器**：
+1. [**贝叶斯滤波器**](#1 Bayes Filter)：基于贝叶斯公式，只是理想的抽象数学模型。
+2. [**扩展卡尔曼**](#2-extended-kalman-filter)：线性化以后代入贝叶斯滤波器，效果不一定好，不一定收敛。
+3. [**广义高斯滤波器**](#3 Generalized Gaussian Filter)：抽象模型，扩展卡尔曼是线性化以后的结果，还可以使用[其他近似方式](#*-Transforming-PDFs)。
+4. [**迭代扩展卡尔曼**](#4 Iterated EKF)：仍然考虑线性化，但反复迭代EKF的线性化操作点，使结果收敛。
+5. [**粒子滤波**](#5 Particle Filter)：考虑[蒙特卡洛](#蒙特卡洛)
+6. [**SP卡尔曼**](#6 SP卡尔曼)：考虑[SP变换](#SP变换)
 
 <img src="/img/in-post/ser/04/image-20201230021637961.png" alt="image-20201230021637961" style="zoom:50%;" />
+
+> 注：prior/posterior的含义发生了变化。
+>
+> |          | 上一时刻      | 这一时刻运动估计 | 这一时刻观测修正 |
+> | :------: | ------------- | ---------------- | ---------------- |
+> |    LG    | k-1 posterior | prior            | posterior        |
+> | **NLNG** | prior belief  | predicted belief | posterior belief |
 
 ---
 
@@ -102,13 +110,13 @@ the conditional PDF of future states of the process, given the present state, de
 
 ---
 
-### Bayes Filter
+### 1 Bayes Filter
 
 目的：计算  belief function
 
 <img src="/img/in-post/ser/04/image-202012140014087021.png" alt="image-202012140014087021" style="zoom: 50%;" />
 
-**第一步**：用贝叶斯公式展开
+**第(1)步**：用贝叶斯公式展开
 
 <img src="/img/in-post/ser/04/image-20201214001408702.png" alt="image-20201214001408702" style="zoom: 50%;" />
 
@@ -121,7 +129,7 @@ here,   $x = x_k \qquad \qquad  y = y_k \qquad \qquad z = x_0, v_1:v_k,y_0:y_{k-
  </center>
 
 
-**第二步**：计算p(x\|z)
+**第(2)步**：计算p(x\|z)
 
 <img src="/img/in-post/ser/04/image-20201214002541751.png" alt="image-20201214002541751" style="zoom:50%;" />
 
@@ -132,8 +140,7 @@ here,   $x = x_k \qquad \qquad  y = y_k \qquad \qquad z = x_0, v_1:v_k,y_0:y_{k-
 <center>
 $p(x，y \mid z) = p(x \mid y,z) \cdot p(y \mid z) $<br/>
  </center>
-
-**第三步**：简化积分中的两项：**hidden state / inverse of marginalization**
+**第(3)步**：简化积分中的两项：**hidden state / inverse of marginalization**
 
 <img src="/img/in-post/ser/04/image-20201214003701959.png" alt="image-20201214003701959" style="zoom:50%;" />
 
@@ -141,11 +148,11 @@ $p(x，y \mid z) = p(x \mid y,z) \cdot p(y \mid z) $<br/>
 
 当一个随机过程在给定现在状态及所有过去状态情况下，其未来状态的条件概率分布仅依赖于当前状态。
 
-**第四步**：联立
+**第(4)步**：联立
 
 <img src="/img/in-post/ser/04/image-20201214004019541.png" alt="image-20201214004019541" style="zoom:50%;" />
 
-**可见**：
+**结论**：
 
 $x$实现递归推导。
 
@@ -155,16 +162,14 @@ $x$实现递归推导。
 
 <img src="/img/in-post/ser/04/image-20201214004543113.png" alt="image-20201214004543113" style="zoom:50%;" />
 
-**但是：**
-
-只是一个数学模型，除线性高斯系统中，不可能实践。
+但只是一个数学模型，除线性高斯系统中，不可能实践。
 
 1. **infinite amount of memory**: 需要用于储存v1-vk, y0-yk的无限储存空间。
 2. **infinite computing resources**: 计算积分的代价很大。
 
 ---
 
-### Extended Kalman Filter
+### 2 Extended Kalman Filter
 
 先上结论以及与LG系统下的KF的比较：
 
@@ -182,7 +187,7 @@ $x$实现递归推导。
 
    <img src="/img/in-post/ser/04/image-20201214012227971.png" alt="image-20201214012227971" style="zoom:50%;" />
 
-**(i) 线性化f,g**
+**(1) 线性化f,g**<span id="线性化"></span>
 
 从 [setup 2](#Setup 2) 的运动观测方程开始。
 
@@ -190,7 +195,7 @@ $x$实现递归推导。
 
 <img src="/img/in-post/ser/04/image-20201229234150062.png" alt="image-20201229234150062" style="zoom: 50%;" />
 
-**(ii) 运动和观测 $p(x_k \| x_{k-1},v_k), p(y_k \| x_k)$**
+**(2) 运动和观测 $p(x_k \| x_{k-1},v_k), p(y_k \| x_k)$**
 
 求p就是计算 x_k,y_k 的均值和协方差
 
@@ -198,7 +203,7 @@ $x$实现递归推导。
 
 协方差部分根据定义 w' = 雅可比矩阵 × w， 即 E[w'w'^T] = J·E[ww^T]·J^T = J·Q·J^T = Q'。同样得到n。
 
-**(iii) 代入BF**
+**(3) 代入BF**
 
 上一节推导的BF：
 
@@ -208,7 +213,7 @@ $x$实现递归推导。
 
 <img src="/img/in-post/ser/04/image-20201230002557868.png" alt="image-20201230002557868" style="zoom:67%;" />
 
-**(iv) 计算BF积分部分**
+**(4) 计算BF积分部分**
 
 积分部分使用 [SER-1-2.2.8](../../../../../../2020/10/26/SER/#228-nonlinear-change) 中的结论: $y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(g(\mu_x), R+G\Sigma_{xx}G^T)$
 
@@ -216,7 +221,7 @@ $x$实现递归推导。
 
 <img src="/img/in-post/ser/04/image-20201230003730991.png" alt="image-20201230003730991" style="zoom:67%;" />
 
-**(v) 计算整个BF**
+**(5) 计算整个BF**
 
 需要用到 [SER-1-2.2.6](../../../../../../2020/10/26/SER/#226-normalized-product) 归一化积的结论：
 
@@ -232,9 +237,7 @@ B) (iv)中第一项展开它的指数部分 得到 $exp(-\frac{1}{2}(y_k-\check{
 
 代入归一化积结论中。
 
-**(vi) 使用SMW**
-
-**(vii) 定义卡尔曼增益**
+**(6) 使用SMW <br/>(7) 定义卡尔曼增益**
 
 解出归一化积中的**μ，Σ**。
 
@@ -242,7 +245,7 @@ B) (iv)中第一项展开它的指数部分 得到 $exp(-\frac{1}{2}(y_k-\check{
 
 
 
-**(viii) 代入整理，得到均值和协方差**
+**(8) 代入整理，得到均值和协方差**
 
 <img src="/img/in-post/ser/04/image-20201230020052300.png" alt="image-20201230020052300" style="zoom: 50%;" />
 
@@ -252,17 +255,195 @@ B) (iv)中第一项展开它的指数部分 得到 $exp(-\frac{1}{2}(y_k-\check{
 
 1. 有着和KF相似的结构，两点不同
 
-   1. 非线性的运动和观测模型
-   2. 协方差矩阵 Q', R' 中蕴含了雅可比矩阵 J
+   1. 通过非线性运动模型得到先验均值
+   2. 更新过程使用先验均值和非线性观测模型得到观测的预测值 
+   3. 协方差矩阵 **Q'** ，**R'** 中蕴含了雅可比矩阵 **J** （**Q'=JQJ$^T$**）
 
-2. 不能证明对于非线性系统一定有用
+2. 不能证明对于非线性系统一定适用(收敛)
 
-   因为线性化的操作点是估计均值点，并非实际均值点。会导致在一些情况中EKF偏离很大，变成有偏的, 不一致的。
-
----
-
-### Gaussian Filter
+   因为线性化的操作点是估计均值点，并非实际真值。会导致在一些情况中EKF偏离很大，变成有偏的, 不一致的。
 
 ---
 
-待续 30.12.2020
+### 3 Generalized Gaussian Filter
+
+**(1)** 上一时刻的置信函数 <br/><center>$p(x_{k-1}|{\check{x_0}},{v_{1:k-1}},{y_{0:k-1}}) = N({\hat{x_{k-1}}},{\hat{P_{k-1}}})$<center/>
+
+**(2)** 通过非线性运动模型预测得到这一时刻的先验 (即加上这一时刻的输入 vk ，得到 xk)  <br/><center>$p(x_k|{\check{x_0}},{v_{1:k}},{y_{0:k-1}}) = N({\check{x_{k}}},{\check{P_{k}}})$<center/>
+
+**(3)**  运动和观测的联合分布<br/><img src="/img/in-post/ser/04/image-20201230120801114.png" alt="image-20201230120801114" style="zoom:50%;" />
+
+**(4)** 这一时刻的置信函数通过高斯推论得到<br/>
+
+拆开联合分布 $p(x,y \mid z) = p(x \mid y,z) \cdot p(y \mid z) $得到$p(x \mid y,z)$<br/><img src="/img/in-post/ser/04/image-20201230121853638.png" alt="image-20201230121853638" style="zoom:50%;" />
+
+问题转换成：
+
+求解需要的5个项 (**μ**x_k, **μ**y_k, **Σ**x_k, **Σ**y_k, **Σ**xy_k)
+
+(1) **μ**x_k 和 **Σ**x_k 通过运动模型进行预测，即为$\check{x_k},\check{P_k}$，就是上面的(2)
+
+(2) 定义卡尔曼增益<br/>
+
+<img src="/img/in-post/ser/04/image-20201230122652514.png" alt="image-20201230122652514" style="zoom:50%;" />
+
+(3) **μ**y_k, **Σ**y_k 和 **Σ**xy_k 可通过[多种近似方式](#*-Transforming-PDFs)得到。(在EKF中就使用了线性化的方式)
+
+---
+
+### 4 Iterated EKF
+
+**(1)** 线性化观测方程 见 [EKF(1)&(2)](#线性化)
+
+<img src="/img/in-post/ser/04/image-20201230130147769.png" alt="image-20201230130147769" style="zoom: 50%;" />
+
+**(2)** 联合分布
+
+<img src="/img/in-post/ser/04/image-20201230131051470.png" alt="image-20201230131051470" style="zoom:50%;" />
+
+**(3)** 高斯推断 以及 定义卡尔曼增益
+
+<img src="/img/in-post/ser/04/image-20201230133133605.png" alt="image-20201230133133605" style="zoom:50%;" />
+
+**(4)** 第一次迭代 = EKF: 令 $x_{op,k} = \check{x}_k$
+
+**(5)** 第n次迭代: 令 $x_{op,k} = \hat{x}_k^{(n)}$
+
+**(6)** 当收敛到足够小时停止迭代
+
+**结论**
+
+在单个时间步长的迭代下，IEKF对应全后验概率的极大值，是一个MAP估计，计算的是模，而不是均值。
+
+---
+
+### * Transforming PDFs
+
+对非线性函数处理的手段：
+
+1. **linearization**: 见[EKF/IEKF](#线性化)
+
+   以x的均值点作为操作点，进行线性化后得到y的分布。得到高斯分布。
+
+   但事实上x的均值点，不一定是y的均值点。而且x的均值点还是一个估计值，可能是错误的。
+
+   而且高斯分布非线性变换后本身不再是高斯分布。另外线性化本身存在误差(局部范围近似)。
+
+2. **Monte Carlo sampling**<span id="蒙特卡洛"></span>
+
+   大量采样，大数定律，依概率收敛。
+
+   计算量随纬度指数增长。采样量越大越准确。可以得到任何分布。
+
+3. **sigmapoint transformation**（SP变换/无迹变换）<span id="SP变换"></span>
+
+   线性化和蒙特卡洛的折中。
+
+   选定输入分布的几个点(Sigma Point)，计算这几个点的非线性变换，构建输出分布。得到高斯分布。
+
+   **(1)** 对于L维高斯分布选取 2L+1 个点
+
+   <img src="/img/in-post/ser/04/image-20201230170056561.png" alt="image-20201230170056561" style="zoom: 67%;" />
+
+   选取的这些点能通过以下方法还原到矩(均值和方差)：
+
+   <img src="/img/in-post/ser/04/image-20201230170225207.png" alt="image-20201230170225207" style="zoom: 67%;" />
+
+   
+
+   **(2)** 将每个点代入 y = g(x) 得到非线性变换
+
+   **(3)** y的均值和方差用类似的方法得到，并得到y的高斯分布：
+
+   <img src="/img/in-post/ser/04/image-20201230170624022.png" alt="image-20201230170624022" style="zoom:67%;" />
+
+---
+
+### 5 Particle Filter
+
+唯一一种可以处理NLNG系统的实用技术。也称为 自举算法 bootstrap algorithm, 凝聚算法 condensation algorithm 等等。
+
+**(1)** 从先验和运动噪声的联合分布中抽取M个样本
+
+<img src="/img/in-post/ser/04/image-20201230181709118.png" alt="image-20201230181709118" style="zoom:50%;" />
+
+**(2)** 使用v_k得到后验PDF (可以理解为将每个 $\mathbf{\hat{x}}\_{k-1,m}$ 代入运动方程 **f()** 得到 $\mathbf{\check{x}}\_{k,m}$)
+
+<img src="/img/in-post/ser/04/image-20201230182641606.png" alt="image-20201230182641606" style="zoom:50%;" />
+
+他们刻画了概率密度：
+
+<img src="/img/in-post/ser/04/image-20201230183009788.png" alt="image-20201230183009788" style="zoom:50%;" />
+
+**(3)** 结合观测 y_k 对其进行矫正：
+
+根据每个粒子的期望后验和预测后燕的收敛程度赋予权重:
+
+<img src="/img/in-post/ser/04/image-20201230183942952.png" alt="image-20201230183942952" style="zoom:50%;" />
+
+<img src="/img/in-post/ser/04/image-20201230184115893.png" alt="image-20201230184115893" style="zoom:50%;" />
+
+假设：
+
+<img src="/img/in-post/ser/04/image-20201230184141173.png" alt="image-20201230184141173" style="zoom:50%;" />
+
+根据权重重采样：比如Madow Resampling
+
+<img src="/img/in-post/ser/04/image-20201230184359768.png" alt="image-20201230184359768" style="zoom: 33%;" />
+
+**整个过程：**
+
+<img src="/img/in-post/ser/04/image-20201230184455215.png" alt="image-20201230184455215" style="zoom: 67%;" />
+
+---
+
+### 6 SP卡尔曼
+
+**预测步骤**: 将先验置信度转换为预测置信度：
+
+**(1)** 联合先验置信度(k-1时刻)和运动噪声(k时刻)
+
+<img src="/img/in-post/ser/04/image-20201230192601064.png" alt="image-20201230192601064" style="zoom:40%;" />
+
+**(2)** 取Sigma Point
+
+<img src="/img/in-post/ser/04/image-20201230192949881.png" alt="image-20201230192949881" style="zoom: 50%;" />
+
+**(3)** 代入运动模型 得到每个变化后的Sigma Point：
+
+<img src="/img/in-post/ser/04/image-20201230193150493.png" alt="image-20201230193150493" style="zoom: 50%;" />
+
+**(4)** 得到预测置信度：
+
+<img src="/img/in-post/ser/04/image-20201230193317145.png" alt="image-20201230193317145" style="zoom: 40%;" />
+
+**校正(观测)步骤**：
+
+**(1)** 联合预测置信度(k时刻)和观测噪声(k时刻)
+
+<img src="/img/in-post/ser/04/image-20201230193524708.png" alt="image-20201230193524708" style="zoom: 50%;" />
+
+**(2)** 变换Sigma Point
+
+<img src="/img/in-post/ser/04/image-20201230193622779.png" alt="image-20201230193622779" style="zoom: 50%;" />
+
+**(3)** 代入观测模型：
+
+<img src="/img/in-post/ser/04/image-20201230193736806.png" alt="image-20201230193736806" style="zoom: 67%;" />
+
+**(4)** 得到后验置信度：
+
+<img src="/img/in-post/ser/04/image-20201230193809095.png" alt="image-20201230193809095" style="zoom: 50%;" />
+
+**整理**：
+
+使用高斯滤波器的结论，代入
+
+<img src="/img/in-post/ser/04/image-20201230122652514.png" alt="image-20201230122652514" style="zoom:50%;" />
+
+并且SPKF也可以迭代。
+
+---
+
+总结不总了，完结撒花 30.12.2020
+

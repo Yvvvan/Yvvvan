@@ -31,8 +31,6 @@ a **motion model** and a **observation model**:
 
 <img src="/img/in-post/ser/k3model1.png" style="zoom:80%;" />
 
-> 关于正负号好像略微有点问题，但不影响理解。
-
 So <img src="/img/in-post/ser/k3model2.png" alt="k3model2" style="zoom: 75%;" />
 
 
