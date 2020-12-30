@@ -6,7 +6,7 @@ plugins: [jekyll-paginate]
 title: Yvan 便利店
 SEOTitle: 予烦的博客 | Yvan Blog
 header-img: img/home-bg.png
-email: yf.dong@outlook.de
+email: corban.donne@gmail.com
 description: ""
 keyword: ""
 url: "http://YF96.github.io"              # your host, for absolute URL
