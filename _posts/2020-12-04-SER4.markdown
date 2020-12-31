@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-04"
-subtitle:   "NLNG系统下滤波器 - 1"
+subtitle:   "NLNG系统下递归估计(滤波器) - 1"
 date:       2020-12-04
 author:     "Yvan"
 header-img: "img/in-post/rse-4.jpg"
@@ -22,15 +22,17 @@ typora-copy-images-to: ..\img\in-post\ser\04
 
 >  定义问题 
 >
+>  批量方法Smoother
+>
 >  -> 批量处理方法的 MAP & 贝叶斯 得到同一个方程 (MAP是模，贝叶斯是均值)
 >
 >  -> Cholesky分解解方程HWH=LL 前向后向 得到一些关于L的迭代方程组
 >
->  -> 继续变形 消去L 变成RTS Smoother（4+1信息形式/5+1经典形式）
+>  -> 可以继续变形 消去L 变成RTS Smoother（4+1信息形式/5+1经典形式）
 >
->  如果不走批量方法，直接走迭代方法
+>  递归方法Filter
 >
->  -> 递归处理方法的 MAP & 贝叶斯
+>  -> 递归的 MAP & 贝叶斯
 >
 >  -> 得到4/5个方程 叫做 卡尔曼滤波器（和RTS中前向部分的一样）
 
@@ -42,7 +44,7 @@ typora-copy-images-to: ..\img\in-post\ser\04
 
 1. [**贝叶斯滤波器**](#1 Bayes Filter)：基于贝叶斯公式，只是理想的抽象数学模型。
 2. [**扩展卡尔曼**](#2-extended-kalman-filter)：线性化以后代入贝叶斯滤波器，效果不一定好，不一定收敛。
-3. [**广义高斯滤波器**](#3 Generalized Gaussian Filter)：抽象模型，扩展卡尔曼是线性化以后的结果，还可以使用[其他近似方式](#x-Transforming-PDFs)对非线性进行变换。
+3. [**广义高斯滤波器**](#3 Generalized Gaussian Filter)：抽象模型，扩展卡尔曼是线性化的结果，还可用[其他方式](#x-Transforming-PDFs)做非线性处理。
 4. [**迭代扩展卡尔曼**](#4 Iterated EKF)：仍然考虑线性化，但反复迭代EKF的线性化操作点，使结果收敛。
 5. [**粒子滤波**](#5 Particle Filter)：考虑[蒙特卡洛](#蒙特卡洛)
 6. [**SP卡尔曼**](#6 SP卡尔曼)：考虑[SP变换](#SP变换)
@@ -51,12 +53,12 @@ typora-copy-images-to: ..\img\in-post\ser\04
 
 <img src="/img/in-post/ser/04/image-20201230021637961.png" alt="image-20201230021637961" style="zoom:50%;" />
 
-> 注：prior/posterior的含义发生了变化。
+> 注：prior/posterior
 >
-> |          | 上一时刻      | 这一时刻运动估计 | 这一时刻观测修正 |
-> | :------: | ------------- | ---------------- | ---------------- |
-> |    LG    | k-1 posterior | prior            | posterior        |
-> | **NLNG** | prior belief  | predicted belief | posterior belief |
+> |       | 上一时刻                | 这一时刻运动估计 | 这一时刻观测修正 |
+> | :---: | ----------------------- | ---------------- | ---------------- |
+> | 用法1 | k-1 posterior           | prior            | posterior        |
+> | 用法2 | prior belief/estimation | predicted belief | posterior belief |
 
 ---
 
@@ -107,7 +109,7 @@ so:
 
 **Markov Property**
 
-the conditional PDF of future states of the process, given the present state, depend only upon the present state, but not on any other past states, i.e., they are conditionally independent of these older states. Such a process is called Markovian or a Markov process.
+the conditional PDF of future states of the process, given the present state, depend only upon the present state, but not on any other past states, i.e., they are conditionally independent of these older states. Such a process is called Markovian or a Markov process. 在给定现在状态时，它与过去状态（即该过程的历史路径）是条件独立的。
 
 <img src="/img/in-post/ser/04/image-20201205154851751.png" alt="image-20201205154851751" style="zoom:50%;" />
 
@@ -460,14 +462,14 @@ B) (iv)中第一项展开它的指数部分 得到 $exp(-\frac{1}{2}(y_k-\check{
 
 ## 总结
 
-| Filter | 分布                             | 系统               | 效率                      | 注                                   |
-| ------ | -------------------------------- | ------------------ | ------------------------- | ------------------------------------ |
-| KF     | 高斯                             | 线性               | 高                        | 要求严苛                             |
-| EKF    | 单峰，用高斯拟合                 | 可导<br />(雅可比) | 高                        |                                      |
-| IEKF   | ''                               | ''                 | 迭代，略低于EKF           | 收敛于后验的模，<br />用算力换准确度 |
-| SPKF   | 单峰，采样SP点，求矩，用高斯拟合 | 不要求可导         | 略低于EKF, 但全是线代操作 |                                      |
-| ISPKF  | ''                               | ''                 | 迭代，低于SPKF            | 收敛于后验均值，<br />用算力换准确度 |
-| PF     | 任何分布                         | ''                 | 低，暴力，随维度指数增长  |                                      |
+| Filter | 分布                                   | 系统               | 效率                            | 注                             |
+| ------ | -------------------------------------- | ------------------ | ------------------------------- | ------------------------------ |
+| KF     | 高斯                                   | 线性               | 高                              | 要求严苛                       |
+| EKF    | 单峰，用高斯拟合                       | 可导<br />(雅可比) | 高                              |                                |
+| IEKF   | ''                                     | ''                 | 迭代，略低于EKF                 | 收敛于模，<br />算力换准确度   |
+| SPKF   | 单峰，采样SP点，求矩，<br />用高斯拟合 | 不要求可导         | 略低于EKF, <br />但全是线代操作 |                                |
+| ISPKF  | ''                                     | ''                 | 迭代，低于SPKF                  | 收敛于均值，<br />算力换准确度 |
+| PF     | 任何分布                               | ''                 | 低，暴力，随维度指数增长        |                                |
 
 ---
 

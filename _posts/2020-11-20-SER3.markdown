@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-03"
-subtitle:   "LG系统下卡尔曼滤波器"
+subtitle:   "LG系统下滤波算法"
 date:       2020-11-20
 author:     "Yvan"
 header-img: "img/in-post/rse-3.jpg"
@@ -49,9 +49,11 @@ $ z = \left[ \begin{matrix} v \\ y  \end{matrix}\right] \qquad H = \left[ \begin
 
 ## 这回内容
 
-上一页主要解决上述三四层关系的详细推导，这一页
+上一页主要解决上述三四层关系的详细推导，
 
-1 首先解决其中的一些细节，即： 关于方程 $(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$ 的 解。
+这一页
+
+1 首先解决其中的一些细节，即： 关于方程 $(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$ 何时有解。
 
 2 然后继续卡尔曼滤波器的内容。
 
@@ -167,10 +169,8 @@ so if the bottom block is full rank of $N$, the solution is unique.
 
 3. 后验xk
 
-   > PPT中标记的大括号有问题 应不包含CRC那一项
-   >
    > 使用的是SMW第一式
-
+   
    <img src="/img/in-post/ser/image-20201203182613348.png" alt="image-20201203182613348" style="zoom: 33%;" />
 
 4. 定义 先验xk，先验Pk，后验Pk
@@ -283,3 +283,27 @@ so if the bottom block is full rank of $N$, the solution is unique.
 
 <img src="/img/in-post/ser/image-20201203230705605.png" alt="image-20201203230705605" style="zoom: 67%;" />
 
+
+
+
+
+## 总结
+
+Smoother
+
+- Batch Discrete-Time Estimation (得到方程)
+  - MAP
+  - 贝叶斯
+
+- Recursive Discrete-Time Smoothing (求解方程)
+  - Cholesky 
+  - RTS
+
+Filter
+
+- Recursive Discrete-Time Filtering
+  - KF
+
+<img src="/img/in-post/ser/image-20201231134014102.png" alt="image-20201231134014102" style="zoom: 67%;" />
+
+<img src="/img/in-post/ser/image-20201231134052254.png" alt="image-20201231134052254" style="zoom:67%;" />
