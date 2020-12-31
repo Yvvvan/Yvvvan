@@ -387,7 +387,21 @@ B) (iv)中第一项展开它的指数部分 得到 $exp(-\frac{1}{2}(y_k-\check{
 
 <img src="/img/in-post/ser/04/image-20201230184141173.png" alt="image-20201230184141173" style="zoom:50%;" />
 
-根据权重重采样：比如Madow Resampling
+> 这个权重其实是这样算的：
+>
+> 1 根据运动方程我们得到了一堆 prediction $\mathbf{\check{x}}\_{k,m}$, 根据这些代入观测方程能得到一堆$\mathbf{\check{y}}\_{k,m}$, 通过这些 $\check{y}$, 可以知道一个预测分布 $g(·)$ 。
+>
+> 2 另一方面，根据实际的观测$\mathbf{y}\_{k}$是测量出来的，比如满足一个目标分布 $f(·)$。
+>
+> 也就是说预测分布中是没有 $\mathbf{y}\_{k}$ 的，而目标分布中是 $\mathbf{y}\_{k}$ 的。
+>
+> ---
+>
+> 让预测分布贴合目标分布：$ f = \frac{f}{g} \dot g$ , 其中 $ \frac{f}{g} = w$。
+>
+> 也就是上方的 $\mathbf{w}\_{k}$, 用 带$\mathbf{y}\_{k}$的分布(目标分布 $f$) 除以 不带$\mathbf{y}\_{k}$的分布(预测分布 $g$)。
+
+**(4)** 根据权重重采样：比如Madow Resampling
 
 <img src="/img/in-post/ser/04/image-20201230184359768.png" alt="image-20201230184359768" style="zoom: 33%;" />
 
