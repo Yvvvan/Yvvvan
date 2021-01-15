@@ -1,10 +1,10 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-02"
-subtitle:   "LG系统下平滑算法"
+subtitle:   "K3 - LG系统下Batch/Smoother"
 date:       2020-11-09
 author:     "Yvan"
-header-img: "img/in-post/rse-2.jpg"
+header-img: "img/in-post/ser0/rse-2.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true
@@ -124,6 +124,8 @@ now we calculat the x which reaches the minimum of J:<br/>we found that J(x) is 
 > 先对 **f(x+Δx)进行高维泰勒展开**如图:
 >
 > > <img src="/img/in-post/ser/k3taylor.png" alt="k3taylor" style="zoom: 80%;" />
+> >
+> > 泰勒展开的前两项相当于在操作点附近做线性拟合(雅可比矩阵)，前三项相当于在操作点附近做二次函数拟合(海塞矩阵)。
 >
 > 再对**x+Δx 代入 f(x)**进行展开
 >
@@ -132,6 +134,8 @@ now we calculat the x which reaches the minimum of J:<br/>we found that J(x) is 
 > 那么如果 f(x)是：
 >
 > <img src="/img/in-post/ser/k3map12.png" alt="k3map12" style="zoom: 48%;" />
+>
+> 也就是最小二乘问题
 
 so 
 

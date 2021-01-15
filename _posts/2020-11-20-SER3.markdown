@@ -1,10 +1,10 @@
 ---
 layout:     post
 title:      "机器人学中的状态估计-03"
-subtitle:   "LG系统下滤波算法"
+subtitle:   "K3 - LG系统下Recursive Filter"
 date:       2020-11-20
 author:     "Yvan"
-header-img: "img/in-post/rse-3.jpg"
+header-img: "img/in-post/ser0/rse-3.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true
@@ -53,9 +53,13 @@ $ z = \left[ \begin{matrix} v \\ y  \end{matrix}\right] \qquad H = \left[ \begin
 
 这一页
 
-1 首先解决其中的一些细节，即： 关于方程 $(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$ 何时有解。
+1 关于方程 $(H^{T}W^{-1}H) \hat{x}=H^{T}W^{-1}z$ **何时有解**。
 
-2 然后继续卡尔曼滤波器的内容。
+2 **卡尔曼滤波器**的内容。
+
+
+
+---
 
 ### 3.1.4 Existence, Uniqueness, and Observability
 
@@ -92,6 +96,8 @@ the upper block is full rank of $NK$
 so if the bottom block is full rank of $N$, the solution is unique.
 
 <img src="/img/in-post/ser/k3rank5" alt="image-20201121003738590" style="zoom:80%;" />
+
+即 可观 = 有唯一解
 
 ### 3.3 Recursive Discrete-Time Filtering
 
@@ -291,11 +297,11 @@ so if the bottom block is full rank of $N$, the solution is unique.
 
 Smoother
 
-- Batch Discrete-Time Estimation (得到方程)
+- Batch Discrete-Time Estimation (得到方程，用线性代数的方法解方程)
   - MAP
   - 贝叶斯
 
-- Recursive Discrete-Time Smoothing (求解方程)
+- Recursive Discrete-Time Smoothing (用recursive的方法求解方程)
   - Cholesky 
   - RTS
 
