@@ -38,12 +38,12 @@ https://github.com/kitian616/jekyll-TeXt-theme
 			</div>
 
             <!-- Article List -->
-			<div class="mini-post-list js-result d-none">
+			<div class="mini-post-list js-result d-none" >
 			{%- assign _sorted_list = site.posts -%}
 			{%- assign _sorted_list = _sorted_list | sort: 'date' -%}
 			{%- assign _sorted_list = _sorted_list | reverse -%}
 
-
+			<section>
 			{%- for _article in _sorted_list -%}
 				{%- assign _tags = '' -%}
 				{%- for _tag in _article.tags -%}
@@ -55,32 +55,38 @@ https://github.com/kitian616/jekyll-TeXt-theme
 					{%- endif -%}
 				{%- endfor -%}
 
-			{% comment %} group by year {% endcomment %}
-			{%- assign _currentdate = _article.date | date: '%Y' -%}
-			{%- if _currentdate != _date -%}
-				{%- unless forloop.first -%}</section>{%- endunless -%}
-				<section>
-				<span class="fa listing-seperator">
-					<span class="tag-text">{{ _currentdate }}</span>
-				</span>
-				{%- assign _date = _currentdate -%}
-			{%- endif -%}
+				{% comment %} group by year {% endcomment %}
+				{%- assign _currentdate = _article.date | date: '%Y' -%}
+				
+				{%- if _currentdate != _date -%}
+					<!-- {%- unless forloop.first -%}</section>{%- endunless -%} -->
+					
+					<!-- <span class="fa listing-seperator"> -->
+						<!-- <span class="tag-text">{{ _currentdate }}</span> -->
+					<!-- </span> -->
+					{%- assign _date = _currentdate -%}
+				{%- endif -%}
 
-				<div class="post-preview item" data-tags="{{ _tags }}">
-				    <a href="{{ _article.url | prepend: site.baseurl }}">
-				        <h2 class="post-title">
-                            {{ _article.title }}
-				        </h2>
-				        {% if _article.subtitle %}
-				        <h3 class="post-subtitle">
-				            {{ _article.subtitle }}
-				        </h3>
-				        {% endif %}
-				    </a>
-					<hr>
-				</div>
-			{%- if forloop.last -%}</section>{%- endif -%}
+					<div class="post-preview item" data-tags="{{ _tags }}">
+						<a href="{{ _article.url | prepend: site.baseurl }}">
+							<h2 class="post-title" style="color: #f9d5e5;">
+								{{ _article.title }}
+							</h2>
+
+							<h3 class="post-subtitle" style="color: whitesmoke;">
+								{% if _article.subtitle %}
+									<div style="float: left;width: 60%;padding-left: 30%;" align="left">{{ _article.subtitle }}</div>
+								{% endif %}
+							
+								<div style="color: #fff2df; padding-right: 30%;" align="right" >{{ _currentdate }} </div>
+							</h3>
+
+						</a>
+						<hr>
+					</div>
+				{%- if forloop.last -%}{%- endif -%}
 			{% endfor %}
+			</section>
 			</div>
 		</div>
 	</div>

@@ -17,11 +17,12 @@ Hi，我是予烦，这里是我的24/7全年常休便利店。我将在这里�
 
 ## 工作经历
 
-* 德国铁路股份有限公司 [Deutsche Bahn AG](https://www.bahn.de/p/view/index.shtml) , Hannover
+* 德国铁路股份有限公司 [Deutsche Bahn AG](https://www.deutschebahn.com/de) , Hannover
 
-- 大众汽车股份有限公司 [Volkswagen AG](https://www.volkswagenag.com/) , Wolfsburg
+* 大众汽车股份有限公司 [Volkswagen AG](https://www.volkswagenag.com/) , Wolfsburg
 
-
+* 弗劳恩霍夫协会 [Fraunhofer-Gesellschaft zur Förderung der angewandten Forschung e. V.](https://www.fraunhofer.de/) 
+  * 开放通讯系统研究所 [Fraunhofer Institut für Offene Kommunikationssysteme FOKUS](https://www.fokus.fraunhofer.de/) , Berlin
 
 ------
 
