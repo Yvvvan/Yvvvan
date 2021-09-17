@@ -1,6 +1,6 @@
 >工作的时候最讨厌的事情莫过于：第一 写代码的时候加注释，第二 看代码的时候没注释。
 
-Hi，我是予烦，这里是我的24/7全年常休便利店。我将在这里陈列一些学习计算机时获得的商品，当然营业时间完全随机，一三五休假，二四六为休假做准备。
+Hi，我是予烦，这里是我的24/7全年常休便利店。你可以通过 <[Category](../category)>页面 查看按标题分类的商品。也可以通过 <[Archive](../archive)>页面 查看按时间排序，并可以按标签筛选的商品。我将在这里陈列一些日常获得的商品，当然营业时间完全随机，一三五休假，二四六为休假做准备。
 
 ## 教育经历
 
@@ -24,8 +24,9 @@ Hi，我是予烦，这里是我的24/7全年常休便利店。我将在这里�
 * 弗劳恩霍夫协会 [Fraunhofer-Gesellschaft zur Förderung der angewandten Forschung e. V.](https://www.fraunhofer.de/) 
   * 开放通讯系统研究所 [Fraunhofer Institut für Offene Kommunikationssysteme FOKUS](https://www.fokus.fraunhofer.de/) , Berlin
 
-------
 
+
+------
   ！！待完善！！
 
 <!-- ##### -->

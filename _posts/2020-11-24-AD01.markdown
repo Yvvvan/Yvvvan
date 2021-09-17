@@ -8,8 +8,9 @@ header-img: "img/in-post/ves-ad/a.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true
+category: "auto"
 tags:
-    - Automated Driving
+    - 自动驾驶
 typora-root-url: ..
 typora-copy-images-to: ..\img\in-post\ves-ad\01
 ---

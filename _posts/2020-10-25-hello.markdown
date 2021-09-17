@@ -1,11 +1,12 @@
 ---
 layout:     post
-title:      "Endlich ein Blog"
-subtitle:   "mach doch… ’nen Blog"
+title:      "随"
+subtitle:   "随便写点"
 date:       2020-10-25 12:00:00
 author:     "Yvan"
 header-img: "img/in-post/a-blog.jpg"
 no-catalog: true
+category: "other"
 tags:
     - 生活
 ---

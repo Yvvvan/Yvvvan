@@ -1,9 +1,9 @@
 /*added*/
 .mybox{
     height: 360px;
-    background:#eaece5;
+    background:transparent;
     position:relative;
-    margin: -50px 0px 80px 0px;
+    margin: -5vh 0px 8vh 0px;
     overflow:hidden; 
 }
 
@@ -18,7 +18,7 @@
     background:#1a1913fd;
     height:auto;
     overflow:hidden; 
-    color:#c0ded9;
+    color:#04e2bd;
     margin: 30px 30px 30px -10%;
     width: 45%;
     height: 300px;

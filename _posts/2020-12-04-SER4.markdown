@@ -8,8 +8,10 @@ header-img: "img/in-post/ser0/rse-4.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true
+category: "auto"
 tags:
-    - SER
+    - 状态估计
+    - 控制学
 typora-root-url: ..
 typora-copy-images-to: ..\img\in-post\ser\04
 ---

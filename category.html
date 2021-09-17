@@ -1,0 +1,139 @@
+---
+layout: page
+title: "Category"
+description: "小孩才做选择 我全都要"
+header-img: "img/category.jpg"
+multilingual: false
+hide-in-nav: false
+now-cate: all
+---
+
+    <!-- 目录 -->
+    <!-- get article name -->
+    {% assign names = "" %}
+    {%- for _post in site.posts -%}
+        {% assign name = _post.title | split: "-" %}
+        {% assign name_list = names | split: "-" %}
+        {% unless name_list contains name[0] %}
+            {% assign names2 = names | append:name[0]%} 
+            {% assign names = names2 | append:"-"%} 
+        {% endunless %}
+    {% endfor %}
+    {% assign name_list = names | split: "-" %}
+    <h1>目录 - <span id="cate">ALL</span></h1>
+
+    {% for _titel in name_list %}
+        <a class="d-none" href="{{'#'| append:_titel| remove: ' '}}" style="font-size: 2vh;white-space : nowrap;" id="content{% increment my_counter0 %}" data-typ={{_post.category}}>  {{_titel}} &ThickSpace;</a>
+    {%endfor%}
+
+
+
+
+    
+    <!-- // style="display: none" -->
+
+    <!-- Content -->
+    <hr>
+    {% assign names = "" %}
+    {%- for _post in site.posts -%}
+        {% assign name = _post.title | split: "-" %}
+        {% assign name_list = names | split: "-" %}
+        {% unless name_list contains name[0] %}
+            {% assign names2 = names | append:name[0]%} 
+            {% assign names = names2 | append:"-"%} 
+            <div id="article{% increment my_counter %}" class="d-none" data-typ={{_post.category}}> 
+            <h2 id="{{name[0]| remove: ' '}}">{{name[0]}}</h2>
+            {%- for post in  site.posts -%}
+                {% assign this_name = post.title | split: "-" %}
+                {% if this_name[0] == name[0] %}
+                <div class="post-preview">
+                    <a href="{{ post.url | prepend: site.baseurl }}">
+                        <h2 class="post-title">
+                            {{ post.title }}
+                        </h2>
+                        {% if post.subtitle %}
+                        <h3 class="post-subtitle">
+                            {{ post.subtitle }}
+                        </h3>
+                        {% endif %}
+                        <div class="post-content-preview">
+                            {% if post.lang == 'en' %}
+                                {{ post.content | strip_html | truncate:300 }}
+                            {% else %}
+                                {{ post.content | strip_html | truncate:200 }}
+                            {% endif %}
+                        </div>
+                    </a>
+                    <p class="post-meta">
+                        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
+                    </p>
+                </div>
+                {%- endif -%}
+            {% endfor%}
+            <hr>
+            </div>
+        {% endunless %}
+    {% endfor %}
+
+
+
+    <script type="text/javascript">
+        // get request(category) after ? in the url
+        function getParams(key) {
+        var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+        };
+        // change category into a printable name
+        function getName(key){
+            var name = "";
+            if (key == "math"){
+                name = "数理"
+            } 
+            else if (key == "csce"){
+                name = "计算机"
+            }   
+            else if (key == "auto"){
+                name = "自动化控制"
+            }   
+            else if (key == "other"){
+                name = "其他"
+            }   
+            else if (key == "code"){
+                name = "开发与编程"
+            }   
+            else if (key == "ml"){
+                name = "机器学习"
+            }       
+            else{
+                name = "ALL"
+            }        
+            return name;
+        }
+        
+        // get cate
+        var tag = getParams("cate");
+        // set the name to the page titel
+        document.getElementById("cate").innerHTML = getName(getParams("cate"));
+        
+        console.log(tag);
+        for (let i =0; !( document.getElementById('content'.concat(i))===null); i++){
+            var obj1 = document.getElementById('article'.concat(i));
+            var obj2 = document.getElementById('content'.concat(i));
+            var this_tag = obj1.attributes.getNamedItem('data-typ').value;
+            if (tag==="all" || tag===this_tag|| tag===null){
+                obj1.classList.remove('d-none');
+                obj2.classList.remove('d-none');
+            } 
+            
+            
+        }
+
+        
+
+            
+     
+     </script>

@@ -1,30 +1,31 @@
 ---
 layout: page
-description: "24/7 全年常休 随机营业"
+description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Company"
 ---
 
 <link rel="stylesheet" href="/css/index.css">
 <!-- card system -->
+<!-- web view -->
+<div class="visible-sm visible-md visible-lg">
 <div class="mybox">
     <div class="grid" style="padding: 0px;">  
         <div >
             <figure class="effect-romeo" style="margin: 0px;width: 60%; position:absolute; z-index:1; left:0px;" >
-                <img src="img\in-post\aca\aca-2.jpg" alt="image_cs"  height="360" style="object-fit: cover;"/>
+                <img src="img\in-post\aca\aca-2.jpg" alt="image_cs" height="360"  style="object-fit: cover;"/>
                 <figcaption>
                 <div style="padding-right: 20%; ">
                     <h2 style="margin-top: 10%;"><span>Ent</span>wicklung <br> Program<span>mierung</span></h2>
-                    <p> Phyton, C, C++, C#, Java, JavaScript, MATLAB ... <br> 
-                        Frontend und Backend, Server und Client <br> 
-                        Traditionelle Entwicklung und Programmierung <br>
+                    <p> Phyton, C, C++, Java, MATLAB ... <br> 
+                        Frontend / Backend, Server / Client <br> 
                         was ich machen kann
                     </p>
                 </div>
-                <a href="#">View more</a>
+                <a href="/category/?cate=code">View more</a>
                 </figcaption>     
             </figure>
         </div>
         <div class="mybox-mini">
-            <div class="mybox-text" style="padding-top: 5%;">
+            <div class="mybox-text " style="padding-top: 5%;">
             <h2> 开发 与 编程 </h2><br>
             <p style="margin: 0px;"> 开始写代码</p>
             </div>
@@ -43,12 +44,12 @@ description: "24/7 全年常休 随机营业"
                     <h2> <span>machine </span> learning</h2>
                     <p>Theory to Practice, <br> Classification and Regression, <br> Natural Language Processing</p>
                 </div>
-                <a href="#">View more</a>
+                <a href="/category/?cate=ml">View more</a>
                 </figcaption>     
             </figure>
         </div>
         <div class="mybox-mini-right">
-            <div class="mybox-text-right">
+            <div class="mybox-text-right ">
             <h2>机器学习</h2>
             <p>也是写代码</p>
             </div>
@@ -66,12 +67,12 @@ description: "24/7 全年常休 随机营业"
                     <h2 style="padding-right: 10%;">Computer <span>Science</span><br>& <span>Engineering</span></h2>
                     <p style="padding-right: 10%;"> kann sagen, ich bin nicht nur theoretischer Informatiker, sondern auch technischer Informatiker</p>
                 </div>
-                <a href="#">View more</a>
+                <a href="/category/?cate=csce">View more</a>
                 </figcaption>     
             </figure>
         </div>
         <div class="mybox-mini">
-            <div class="mybox-text">
+            <div class="mybox-text ">
             <h2>计算机</h2>
             <p>计算机科学+计算机工程</p>
             </div>
@@ -86,15 +87,15 @@ description: "24/7 全年常休 随机营业"
                 <img src="img\in-post\ser0\rse-2.jpg" alt="image_robo"  height="360" style="object-fit: cover;"/>
                 <figcaption>
                 <div>
-                    <h2><span>Automatisierung</span>s<br>-technik</h2>
+                    <h2><span>Auto<br>matisierung</span>s<br>technik</h2>
                     <p>vorher wusste niemand, dass dieses Ding so viel Mathematik erfordert.</p>
                 </div>
-                <a href="#">View more</a>
+                <a href="/category/?cate=auto">View more</a>
                 </figcaption>     
             </figure>
         </div>
         <div class="mybox-mini-right">
-            <div class="mybox-text-right">
+            <div class="mybox-text-right ">
             <h2>自动化控制</h2>
             <p>机器人学 以及<br>控制·观测·滤波器 = 数学·数学·数学<br>...</p>
             </div>
@@ -113,11 +114,11 @@ description: "24/7 全年常休 随机营业"
                     <p style="font-size: 25px;">& Physik  </p><br>
                     <p> Mathematik war mal ein guter Freund von mir, ist es aber nicht mehr. Physik auch. :) </p>
                 </div>
-                <a href="#">View more</a>
+                <a href="/category/?cate=math">View more</a>
                 </figcaption>     
             </figure>
         </div>
-        <div class="mybox-mini">
+        <div class="mybox-mini ">
             <div class="mybox-text" style="padding-top: 5%;">
             <h2> 数 &emsp;  &emsp;  <br>&emsp;   理  </h2><br>
             <p style="margin: 0px;"> 这里会收录一些**深度涉及**数学以及物理学，<br>不那么工学/计算机的知识，<br> 比如线性代数，电磁学等等。 <br><br> 我练功不发自真心 :) </p>
@@ -136,11 +137,11 @@ description: "24/7 全年常休 随机营业"
                     <h2>Das <span>Leben</span></h2>
                     <p style="padding-left: 5%;" >Hat jedenfalls nichts mit dem Computer zu tun</p>
                 </div>
-                <a href="#">View more</a>
+                <a href="/category/?cate=other">View more</a>
                 </figcaption>     
             </figure>
         </div>
-        <div class="mybox-mini-right">
+        <div class="mybox-mini-right ">
             <div class="mybox-text-right">
             <h2>其他</h2>
             <p>反正和计算机无关</p>
@@ -148,10 +149,38 @@ description: "24/7 全年常休 随机营业"
         </div>
     </div>
 </div>
+</div>
 
+<!-- phone view -->
+<div class="hidden-sm hidden-md hidden-lg">
+{% for post in paginator.posts %}
+<div class="post-preview">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+        <h2 class="post-title">
+            {{ post.title }}
+        </h2>
+        {% if post.subtitle %}
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+        {% endif %}
+        <div class="post-content-preview">
+            {% if post.lang == 'en' %}
+                {{ post.content | strip_html | truncate:300 }}
+            {% else %}
+                {{ post.content | strip_html | truncate:200 }}
+            {% endif %}
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
+    </p>
+</div>
+<hr>
+{% endfor %}
 
 <!-- Pager -->
-<!-- {% if paginator.total_pages > 1 %}
+{% if paginator.total_pages > 1 %}
 <ul class="pager">
     {% if paginator.previous_page %}
     <li class="previous">
@@ -164,4 +193,5 @@ description: "24/7 全年常休 随机营业"
     </li>
     {% endif %}
 </ul>
-{% endif %} -->
+{% endif %}
+</div>
