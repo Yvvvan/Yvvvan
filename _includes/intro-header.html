@@ -95,6 +95,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
         {% if include.short %}
         <div class="site-heading" id="tag-heading">
         {% else %}
@@ -102,6 +103,11 @@
         {% endif %}
           <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
           <span class="subheading">{{ page.description }}</span>
+            {% if page.header-img-credit %}
+            <div class="header-img-credit">
+                Image by <a href="//{{page.header-img-credit-href}}">{{page.header-img-credit}}</a>
+            </div>
+            {% endif %}
         </div>
       </div>
     </div>

@@ -3,6 +3,39 @@ layout: page
 description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Company"
 ---
 
+<!-- {% assign cates = "" %}
+    {%- for _post in site.posts -%}
+        {% assign _cate = _post.category %}
+        {% assign cates_list = cates | split:"-" %}
+        {% unless cates_list contains _cate %}
+            {% assign cates = cates| append:_cate | append:"-"%} 
+            <div> 
+                <div class="post-preview">
+                    <a href="{{ post.url | prepend: site.baseurl }}">
+                        <h2 class="post-title">
+                            {{ _post.title }}
+                        </h2>
+                        {% if _post.subtitle %}
+                        <h3 class="post-subtitle">
+                            {{ _post.subtitle }}
+                        </h3>
+                        {% endif %}
+                        <div class="post-content-preview">
+                            {% if _post.lang == 'en' %}
+                                {{ _post.content | strip_html | truncate:300 }}
+                            {% else %}
+                                {{ _post.content | strip_html | truncate:200 }}
+                            {% endif %}
+                        </div>
+                    </a>
+                    <p class="post-meta">
+                        Posted by {% if _post.author %}{{ _post.author }}{% else %}{{ _post.title }}{% endif %} on {{ _post.date | date: "%B %-d, %Y" }}
+                    </p>
+                </div>
+            </div>
+        {% endunless %}
+    {% endfor %} -->
+
 <link rel="stylesheet" href="/css/index.css">
 <!-- card system -->
 <!-- web view -->
@@ -26,8 +59,30 @@ description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Comp
         </div>
         <div class="mybox-mini">
             <div class="mybox-text " style="padding-top: 5%;">
-            <h2> 开发 与 编程 </h2><br>
-            <p style="margin: 0px;"> 开始写代码</p>
+                <div style="height: 50%;">
+                <h2> 开发 与 编程 </h2><br>
+                <p style="margin: 0px;"> 开始写代码</p>
+                </div>
+                <hr style="margin: 0px;">
+                {%- for _post in site.posts -%}
+                {% if _post.category == 'code' %}
+                <div style="height: 50%;"> 
+                    <div class="post-preview" >
+                        <a href="{{ _post.url | prepend: site.baseurl }}">
+                            <h2 class="post-title" style="font-size: 200%;">
+                                {{ _post.title }}
+                            </h2>
+                            {% if _post.subtitle %}
+                            <h3 class="post-subtitle">
+                                {{ _post.subtitle }}
+                            </h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                    {% break %}
+                {% endif %}
+                {%endfor%}
             </div>
         </div>
     </div>
@@ -49,9 +104,31 @@ description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Comp
             </figure>
         </div>
         <div class="mybox-mini-right">
-            <div class="mybox-text-right ">
-            <h2>机器学习</h2>
-            <p>也是写代码</p>
+            <div class="mybox-text-right " style="padding-top: 5%;">
+                <div style="height: 50%;">
+                <h2> 机器学习 </h2><br>
+                <p style="margin: 0px;"> 也是写代码</p>
+                </div>
+                <hr style="margin: 0px;">
+                {%- for _post in site.posts -%}
+                {% if _post.category == 'ml' %}
+                <div style="height: 50%;"> 
+                    <div class="post-preview" >
+                        <a href="{{ _post.url | prepend: site.baseurl }}">
+                            <h2 class="post-title" style="font-size: 200%;color:  #eea29a;">
+                                {{ _post.title }}
+                            </h2>
+                            {% if _post.subtitle %}
+                            <h3 class="post-subtitle" style="color:  #eea29a;">
+                                {{ _post.subtitle }}
+                            </h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                    {% break %}
+                {% endif %}
+                {%endfor%}
             </div>
         </div>
     </div>
@@ -72,9 +149,31 @@ description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Comp
             </figure>
         </div>
         <div class="mybox-mini">
-            <div class="mybox-text ">
-            <h2>计算机</h2>
-            <p>计算机科学+计算机工程</p>
+            <div class="mybox-text " style="padding-top: 5%;">
+                <div style="height: 50%;">
+                <h2> 计算机 </h2><br>
+                <p style="margin: 0px;"> 计算机科学+计算机工程</p>
+                </div>
+                <hr style="margin: 0px;">
+                {%- for _post in site.posts -%}
+                {% if _post.category == 'csce' %}
+                <div style="height: 50%;"> 
+                    <div class="post-preview" >
+                        <a href="{{ _post.url | prepend: site.baseurl }}">
+                            <h2 class="post-title" style="font-size: 200%;">
+                                {{ _post.title }}
+                            </h2>
+                            {% if _post.subtitle %}
+                            <h3 class="post-subtitle">
+                                {{ _post.subtitle }}
+                            </h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                    {% break %}
+                {% endif %}
+                {%endfor%}
             </div>
         </div>
     </div>
@@ -94,10 +193,33 @@ description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Comp
                 </figcaption>     
             </figure>
         </div>
+
         <div class="mybox-mini-right">
-            <div class="mybox-text-right ">
-            <h2>自动化控制</h2>
-            <p>机器人学 以及<br>控制·观测·滤波器 = 数学·数学·数学<br>...</p>
+            <div class="mybox-text-right " style="padding-top: 5%;">
+                <div style="height: 50%;">
+                    <h2>自动化控制</h2>
+                    <p>机器人学 以及<br>控制·观测·滤波器 = 数学·数学·数学<br>...</p>
+                </div>
+                <hr style="margin: 0px;">
+                {%- for _post in site.posts -%}
+                {% if _post.category == 'auto' %}
+                <div style="height: 50%;"> 
+                    <div class="post-preview" >
+                        <a href="{{ _post.url | prepend: site.baseurl }}">
+                            <h2 class="post-title" style="font-size: 200%;color:  #eea29a;">
+                                {{ _post.title }}
+                            </h2>
+                            {% if _post.subtitle %}
+                            <h3 class="post-subtitle" style="color:  #eea29a;">
+                                {{ _post.subtitle }}
+                            </h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                    {% break %}
+                {% endif %}
+                {%endfor%}
             </div>
         </div>
     </div>
@@ -141,10 +263,32 @@ description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Comp
                 </figcaption>     
             </figure>
         </div>
-        <div class="mybox-mini-right ">
-            <div class="mybox-text-right">
-            <h2>其他</h2>
+        <div class="mybox-mini-right">
+            <div class="mybox-text-right " style="padding-top: 5%;">
+                <div style="height: 50%;">
+                    <h2>其他</h2>
             <p>反正和计算机无关</p>
+                </div>
+                <hr style="margin: 0px;">
+                {%- for _post in site.posts -%}
+                {% if _post.category == 'other' %}
+                <div style="height: 50%;"> 
+                    <div class="post-preview" >
+                        <a href="{{ _post.url | prepend: site.baseurl }}">
+                            <h2 class="post-title" style="font-size: 200%;color:  #eea29a;">
+                                {{ _post.title }}
+                            </h2>
+                            {% if _post.subtitle %}
+                            <h3 class="post-subtitle" style="color:  #eea29a;">
+                                {{ _post.subtitle }}
+                            </h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                    {% break %}
+                {% endif %}
+                {%endfor%}
             </div>
         </div>
     </div>

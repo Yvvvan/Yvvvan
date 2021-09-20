@@ -6,6 +6,8 @@ header-img: "img/category.jpg"
 multilingual: false
 hide-in-nav: false
 now-cate: all
+header-img-credit: "Raasgendor from Pixabay"
+header-img-credit-href: "pixabay.com/de/users/raasgendor-22262780/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6370515"
 ---
 
     <!-- 目录 -->
@@ -23,7 +25,7 @@ now-cate: all
     <h1>目录 - <span id="cate">ALL</span></h1>
 
     {% for _titel in name_list %}
-        <a class="d-none" href="{{'#'| append:_titel| remove: ' '}}" style="font-size: 2vh;white-space : nowrap;" id="content{% increment my_counter0 %}" data-typ={{_post.category}}>  {{_titel}} &ThickSpace;</a>
+        <a class="d-none" href="{{'#'| append:_titel| remove: ' '}}" style="font-size: 2vh;white-space : nowrap;" id="content{% increment my_counter0 %}" data-typ={{_post.category}}>  {{_titel}}</a> &ThickSpace;
     {%endfor%}
 
 
@@ -119,7 +121,7 @@ now-cate: all
         // set the name to the page titel
         document.getElementById("cate").innerHTML = getName(getParams("cate"));
         
-        console.log(tag);
+        //console.log(tag);
         for (let i =0; !( document.getElementById('content'.concat(i))===null); i++){
             var obj1 = document.getElementById('article'.concat(i));
             var obj2 = document.getElementById('content'.concat(i));
