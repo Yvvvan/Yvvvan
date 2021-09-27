@@ -324,9 +324,9 @@ Filter
 
 | SER目录                                    |                                 |      |
 | ------------------------------------------ | ------------------------------- | ---- |
-| [SER-1](../../../../../../2020/10/26/SER)  | K2 - 基础概率论                 |      |
-| [SER-2](../../../../../../2020/11/09/SER2) | K3 - LG系统下Batch/Smoother     |      |
-| [SER-3](../../../../../../2020/11/20/SER3) | K3 - LG系统下Recursive Filter   |      |
-| [SER-4](../../../../../../2020/12/04/SER4) | K4 - NLNG系统下Recursive Filter |      |
-| [SER-5](../../../../../../2020/12/31/SER5) | K4 - NLNG系统下Batch            |      |
-| [SER-6](../../../../../../2021/01/15/SER6) | K5 - 偏差,匹配和外点            |      |
+| [SER-1]({{site.url}}/auto/2020/10/26/SER)  | K2 - 基础概率论                 |      |
+| [SER-2]({{site.url}}/auto/2020/11/09/SER2) | K3 - LG系统下Batch/Smoother     |      |
+| [SER-3]({{site.url}}/auto/2020/11/20/SER3) | K3 - LG系统下Recursive Filter   |      |
+| [SER-4]({{site.url}}/auto/2020/12/04/SER4) | K4 - NLNG系统下Recursive Filter |      |
+| [SER-5]({{site.url}}/auto/2020/12/31/SER5) | K4 - NLNG系统下Batch            |      |
+| [SER-6]({{site.url}}/auto/2021/01/15/SER6) | K5 - 偏差,匹配和外点            |      |
