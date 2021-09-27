@@ -88,6 +88,16 @@ layout: default
     </div>
 </article>
 
+    
+
+<div id="viewStyle"></div>
+<script>
+  var intFrameWidth = window.innerWidth; 
+  if(intFrameWidth>768){
+    document.getElementById("viewStyle").innerHTML = '<style type="text/css">body {zoom:1.3;}</style>';
+  }
+</script>
+
 <!-- add support for mathjax by voleking-->
 {% if page.mathjax %}
   {% include mathjax_support.html %}
