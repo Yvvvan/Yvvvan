@@ -313,7 +313,7 @@ That is to calculate p(y):
 >
 > 根据 $F^T \cdot (\Sigma_{xx}^{-1}+G^TRG )= R^{-1}G$，替换回 $F$。
 >
-> 然后根据[SMW恒等式](#2.2.7 Sherman-Morrison-Woodbury Identity)，观察后....，即可化简。
+> 然后根据[SMW恒等式](#227-sherman-morrison-woodbury-identity)，观察后....，即可化简。
 >
 > 最后得到关于y的高斯分布。
 

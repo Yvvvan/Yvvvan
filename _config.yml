@@ -24,6 +24,11 @@ featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
 
 
+# New Posts
+new-posts: true
+new-posts-size: 3
+related-posts: true
+
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "不能拼命，拼命还怎么挣钱啊！"
@@ -38,7 +43,7 @@ friends: [
      },
      {
          title: "苏靠谱",
-         href: "https://space.bilibili.com/556441232?from=search&seid=3904927909362434033&spm_id_from=333.337.0.0"
+         href: "https://space.bilibili.com/556441232"
      },
 
 ]

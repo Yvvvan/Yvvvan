@@ -1,0 +1,23 @@
+{% if site.new-posts %}
+<section class="visible-md visible-lg">
+    <hr>
+    <h5><a href="{{'/category/' | prepend: site.baseurl }}"> NEW POSTS</a></h5>
+    <div class="post">
+        {%- assign _sorted_list = site.posts -%}
+        {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
+        {%- assign _sorted_list = _sorted_list | reverse -%}
+        {%- assign _post_num = 1 -%}
+        {%- for _post in _sorted_list -%}
+            <a href={{_post.url | prepend: site.baseurl}}>
+            <p style="margin: 15px 0;"> 
+                <b style="font-size: 18px;">{{ _post.title }} </b> <br>
+                <small style="white-space: nowrap;">{{ _post.subtitle }} </small>  
+            </p></a>
+            {%- assign _post_num =_post_num | plus: 1 -%}
+            {% if _post_num > site.new-posts-size %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}

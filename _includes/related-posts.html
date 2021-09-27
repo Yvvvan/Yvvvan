@@ -1,0 +1,66 @@
+{% if site.related-posts %}
+    {%- assign _sorted_list = site.posts -%}
+    {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
+    {% assign this_name = page.title | split: "-" %}
+    {% assign _has_related = 0 %}
+    {%- for _post in _sorted_list -%}
+        {% assign _post_name = _post.title | split: "-" %}
+        {% if _post.title == page.title %}
+            {% continue %}
+        {% endif%}
+        {% if this_name[0] == _post_name[0] %}
+            {% assign _has_related = 1 %}
+            {% break %}
+        {% endif%}
+    {% endfor %}
+
+    {% if _has_related == 1 %}
+    <section class="visible-md visible-lg">
+        <hr>
+        <h5>RELATED <br/><br/>{{ this_name[0] }} </h5>
+        <div class="post" style="padding-right: -10px;">
+            <div align="left"> 
+            {%- for _post in _sorted_list -%}
+                {% assign _post_name = _post.title | split: "-" %}
+                {% if this_name[0] == _post_name[0] %}
+                    <a href={{_post.url | prepend: site.baseurl}}>
+                        <p style="margin: 5px 0;"> 
+                            <small ><nobr>{{ _post_name[1] }} | {{ _post.subtitle }} </nobr> </small>
+                        </p>
+                    </a>  
+                {% endif %}  
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% else %}
+        {% comment %}
+            @param {boolean} bottom - bottom will render <hr> 
+        {% endcomment %}
+
+        {% if site.featured-tags %}
+        <section>
+            <hr>
+            <h5><a href="{{'/archive/' | prepend: site.baseurl }}">FEATURED TAGS</a></h5>
+            <div class="tags">
+                {% capture tags %}
+                {% comment %}
+                    there must be no space between for and if otherwise this tricky sort won't work.
+                    url_encode/decode is for escaping otherwise extra <a> will get generated 
+                    but it will break sort...
+                {% endcomment %}
+                {% for tag in site.tags %}{% if tag[1].size > site.featured-condition-size %}
+                        <a data-sort="{{ site.posts.size | minus: tag[1].size | prepend: '0000' | slice: -4, 4 }}" 
+                            href="{{ site.baseurl }}/archive/?tag={{ tag[0] | url_encode }}"
+                            title="{{ tag[0] }}"
+                            rel="{{ tag[1].size }}">{{ tag[0] }}</a>__SEPARATOR__
+                {% endif %}{% endfor %}
+                {% endcapture %}
+                {{ tags | split:'__SEPARATOR__' | sort }}
+            </div>
+        </section>
+        {% endif %}
+    {% endif %}
+
+{% endif %}
+

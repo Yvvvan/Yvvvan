@@ -19,7 +19,7 @@ typora-copy-images-to: ..\img\in-post\ves-ad\02
 >
 > 本文关注**三份文献**对于Safe State的理解。[ 看完才发现两份论文的作者是同一个人 : )  ]
 >
-> 是[第1部分](#Safe State 1)和[第2部分](#Safe State 2)更关注理论定义部分，[第3部分](#Safe State 3)更关注建模。
+> 是[第1部分](#safe-state-1)和[第2部分](#safe-state-2)更关注理论定义部分，[第3部分](#safe-state-3)更关注建模。
 
 ## Safe State 1
 

@@ -57,7 +57,7 @@ layout: default
                 visible-lg-block
                 sidebar-container
                 catalog-container">
-                <div class="side-catalog">
+                <div class="side-catalog" style="overflow:hidden;">
                     <!-- Catalog -->
                     {% unless page.no-catalog %}
                     <hr class="hidden-sm hidden-xs">
@@ -66,9 +66,14 @@ layout: default
                     </h5>
                     <ul class="catalog-body"></ul>
                     {% endunless %}
+
+                    <!-- Related Posts -->
+                    {% include related-posts.html %}
+
+                    <!-- New Posts -->
+                    {% include new-posts.html %}
+
                     
-                    <!-- Featured Tags -->
-                    {% include featured-tags.html bottom=true %}
                 </div>
             </div>
             
