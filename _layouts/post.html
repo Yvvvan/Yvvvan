@@ -48,6 +48,13 @@ layout: default
                 </ul>
                 <hr style="visibility: hidden;">
 
+                <!-- gittalk comment -->
+                {% if site.gitalk %}
+                <div class="comment" style="padding-left: 15px;padding-right: 15px;">
+                    {% include comments.html %}
+                </div>
+                {% endif %}
+
                 
             </div>
 
@@ -80,13 +87,6 @@ layout: default
         </div>
     </div>
 </article>
-
-<!-- gittalk comment -->
-{% if site.gitalk %}
-<div class="comment" style="padding-left: 15px;padding-right: 15px;">
-    {% include comments.html %}
-</div>
-{% endif %}
 
 <!-- add support for mathjax by voleking-->
 {% if page.mathjax %}
