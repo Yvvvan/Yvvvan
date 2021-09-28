@@ -59,7 +59,8 @@ chrome-tab-theme-color: "#000000"
 service-worker: true
 
 #Google Analytics
-google_analytics: G-NKMJ486KN1  # your google analytics
+#google_analytics: G-NKMJ486KN1  # your google analytics
+google_analytics: G-5Z51FMKNLZ
 
 
 # MathJax rendering for layout:page (e.g. post preview)
