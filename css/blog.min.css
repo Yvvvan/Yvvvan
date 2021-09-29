@@ -1836,6 +1836,17 @@ img::-moz-selection {
 }
 
 /*added*/
+@media (min-width:1560px){
+    .container{
+        width:1500px 
+   }
+}
+@media (min-width:1860px){
+    .container{
+        width:1800px 
+   }
+}
+
 body {
 	background: #2f3238;
 	color: #fff;
