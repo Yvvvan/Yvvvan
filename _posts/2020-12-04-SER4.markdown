@@ -188,7 +188,7 @@ $x$实现递归推导。
 
 2. 两个噪音w,n是零均值高斯分布，且无关。
 
-3. 运动和观测方程f,g被线性化。（线性化方法在[SER-1-2.2.8]({{site.url}}/auto/2020/10/26/SER/#228-nonlinear-change)中提到）
+3. 运动和观测方程f,g被线性化。（线性化方法在[SER-1-2.2.8]({{site.baseurl}}/auto/2020/10/26/SER/#228-nonlinear-change)中提到）
 
 4. 运动和观测方程的线性化操作取在如下两个点上：
 
@@ -222,7 +222,7 @@ $x$实现递归推导。
 
 **(4) 计算BF积分部分**
 
-积分部分使用 [SER-1-2.2.8]({{site.url}}/auto/2020/10/26/SER/#228-nonlinear-change) 中的结论: $y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(g(\mu_x), R+G\Sigma_{xx}G^T)$
+积分部分使用 [SER-1-2.2.8]({{site.baseurl}}/auto/2020/10/26/SER/#228-nonlinear-change) 中的结论: $y \sim \mathcal{N}(\mu_y, \Sigma_{yy}) = \mathcal{N}(g(\mu_x), R+G\Sigma_{xx}G^T)$
 
 将服从⾼斯分布的变量传⼊⾮线性函数中，可以看到积分仍然是⾼斯的。
 
@@ -230,7 +230,7 @@ $x$实现递归推导。
 
 **(5) 计算整个BF**
 
-需要用到 [SER-1-2.2.6]({{site.url}}/auto/2020/10/26/SER/#226-normalized-product) 归一化积的结论：
+需要用到 [SER-1-2.2.6]({{site.baseurl}}/auto/2020/10/26/SER/#226-normalized-product) 归一化积的结论：
 
 即K 个⾼斯概率密度函数的归⼀化积，仍然是⾼斯概率密度函数。
 
@@ -485,9 +485,9 @@ B) (iv)中第一项展开它的指数部分 得到 $exp(-\frac{1}{2}(y_k-\check{
 
 | SER目录                                    |                                 |      |
 | ------------------------------------------ | ------------------------------- | ---- |
-| [SER-1]({{site.url}}/auto/2020/10/26/SER)  | K2 - 基础概率论                 |      |
-| [SER-2]({{site.url}}/auto/2020/11/09/SER2) | K3 - LG系统下Batch/Smoother     |      |
-| [SER-3]({{site.url}}/auto/2020/11/20/SER3) | K3 - LG系统下Recursive Filter   |      |
-| [SER-4]({{site.url}}/auto/2020/12/04/SER4) | K4 - NLNG系统下Recursive Filter |      |
-| [SER-5]({{site.url}}/auto/2020/12/31/SER5) | K4 - NLNG系统下Batch            |      |
-| [SER-6]({{site.url}}/auto/2021/01/15/SER6) | K5 - 偏差,匹配和外点            |      |
+| [SER-1]({{site.baseurl}}/auto/2020/10/26/SER)  | K2 - 基础概率论                 |      |
+| [SER-2]({{site.baseurl}}/auto/2020/11/09/SER2) | K3 - LG系统下Batch/Smoother     |      |
+| [SER-3]({{site.baseurl}}/auto/2020/11/20/SER3) | K3 - LG系统下Recursive Filter   |      |
+| [SER-4]({{site.baseurl}}/auto/2020/12/04/SER4) | K4 - NLNG系统下Recursive Filter |      |
+| [SER-5]({{site.baseurl}}/auto/2020/12/31/SER5) | K4 - NLNG系统下Batch            |      |
+| [SER-6]({{site.baseurl}}/auto/2021/01/15/SER6) | K5 - 偏差,匹配和外点            |      |

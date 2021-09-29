@@ -17,7 +17,8 @@
     {% if _has_related == 1 %}
     <section class="visible-md visible-lg">
         <hr>
-        <h5>RELATED <br/><br/>{{ this_name[0] }} </h5>
+        {% assign goTo = "/category/#" %}
+        <a href={{ this_name[0] | prepend: goTo | prepend: site.baseurl}} ><h5>RELATED <br/><br/>{{ this_name[0] }} </h5></a>
         <div class="post" style="padding-right: -10px;">
             <div align="left"> 
             {%- for _post in _sorted_list -%}
