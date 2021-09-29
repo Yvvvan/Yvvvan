@@ -5,6 +5,12 @@
     position:relative;
     margin: -5vh 0px 8vh 0px;
     overflow:hidden; 
+    max-width: 850px;
+}
+@media (min-width:1560px){
+  .mybox{
+      margin-left:20% ;
+ }
 }
 
 .mybox-mini{
