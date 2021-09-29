@@ -2,40 +2,6 @@
 layout: page
 description: "24/7 全年常休 随机营业 <br> 现已升级为Commercial Company"
 ---
-
-<!-- {% assign cates = "" %}
-    {%- for _post in site.posts -%}
-        {% assign _cate = _post.category %}
-        {% assign cates_list = cates | split:"-" %}
-        {% unless cates_list contains _cate %}
-            {% assign cates = cates| append:_cate | append:"-"%} 
-            <div> 
-                <div class="post-preview">
-                    <a href="{{ post.url | prepend: site.baseurl }}">
-                        <h2 class="post-title">
-                            {{ _post.title }}
-                        </h2>
-                        {% if _post.subtitle %}
-                        <h3 class="post-subtitle">
-                            {{ _post.subtitle }}
-                        </h3>
-                        {% endif %}
-                        <div class="post-content-preview">
-                            {% if _post.lang == 'en' %}
-                                {{ _post.content | strip_html | truncate:300 }}
-                            {% else %}
-                                {{ _post.content | strip_html | truncate:200 }}
-                            {% endif %}
-                        </div>
-                    </a>
-                    <p class="post-meta">
-                        Posted by {% if _post.author %}{{ _post.author }}{% else %}{{ _post.title }}{% endif %} on {{ _post.date | date: "%B %-d, %Y" }}
-                    </p>
-                </div>
-            </div>
-        {% endunless %}
-    {% endfor %} -->
-
 <link rel="stylesheet" href="/css/index.css">
 <!-- card system -->
 <!-- web view -->
