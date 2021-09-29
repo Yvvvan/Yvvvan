@@ -19,7 +19,7 @@ const PRECACHE_LIST = [
   "./js/bootstrap.min.js",
   "./js/blog.min.js",
   "./js/snackbar.js",
-  "./img/home-bg.jpg",
+  "./img/home-bg.png",
   "./img/404-bg.jpg",
   "./css/blog.min.css",
   "./css/bootstrap.min.css"
