@@ -28,7 +28,7 @@ Physical measurand → Sensing element → Signal modification subsystem → Ind
 
 **Test Stands**
 
-Physical measurand → |Sensor|→  Electrical measuring signal→ |Signal modification amplifier and filter|→ Standard signal(V/I/f) → |Analog to digital converter(ADC)| → Digital Signal → Computer / data acquisition visualization analysing and recording
+![image-20211013210016810](/img/in-post/smartsensor/image-20211013210016810.png)
 
 比如 在研究上运用的NI的设备和LabVIEW，在工业上运用PLC系统
 
@@ -72,7 +72,7 @@ error = measured value - true value: 不只是测量系统自身的问题，是�
    
    4. hysteresis  迟滞现象/滞回 
    
-      增加input和减少input的utput变化是不同的。下图是**理想化橡皮筋伸缩**的情况：橡皮筋不完全满足线性弹簧的胡克定律(F=kx)。经典的滞回还有 **磁滞** 和 **施密特触发器** Schmitt Trigger。
+      增加input和减少input的output变化是不同的。下图是**理想化橡皮筋伸缩**的情况：橡皮筋不完全满足线性弹簧的胡克定律(F=kx)。经典的滞回还有 **磁滞** 和 **施密特触发器** Schmitt Trigger。
    
       ![img](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Elastic_Hysteresis.svg/220px-Elastic_Hysteresis.svg.png)
    
@@ -98,7 +98,7 @@ error = measured value - true value: 不只是测量系统自身的问题，是�
 
    1. 全尺度误差：不管测量值是多少，始终有**全尺度*百分数的固定误差**
    2. 读数误差：存在是**读数*百分数的误差**
-   3. 比如 一个测量范围是 5kg的秤 标注 10%FS的情况，称2kg的东西显示1.5-2.5；标注 10%RD的情况，称2kg的东西显示1.8-2.2
+   3. 比如 一个测量范围是 5kg的秤 标注 10%FS的情况，显示2kg的东西实际可能是1.5-2.5kg；标注 10%RD的情况，显示2kg的东西实际是1.8-2.2kg
 
 ### Precision → Random Error 
 
@@ -248,10 +248,9 @@ error = measured value - true value: 不只是测量系统自身的问题，是�
 ### 5 Handling of Uncertainty
 
 #### Statistical analysis
-
-	1. Model: accurate？
- 	2. Measurement: devices?
- 	3. Reality: Something happened?
+1. Model: accurate？
+2. Measurement: devices?
+3. Reality: Something happened?
 
 #### Scenario analysis
 
