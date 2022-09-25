@@ -6,6 +6,52 @@ description: "&nbsp;24/7 全年常休 随机营业&nbsp; <br> &nbsp;现已升级
 <!-- card system -->
 <!-- web view -->
 <div class="visible-sm visible-md visible-lg">
+
+<div class="mybox">
+    <div class="grid" style="padding: 0px;">  
+        <div >
+            <figure class="effect-milo" style="margin: 0px;width: 60%; position:absolute; z-index:1; right:0px;" >
+                <img src="img\in-post\a-blog.jpg" alt="img12"  height="360" style="object-fit: cover;"/>
+                <figcaption>
+                <div>
+                    <h2>Das <span>Leben</span></h2>
+                    <p style="padding-left: 5%;" >Hat jedenfalls nichts mit dem Computer zu tun</p>
+                </div>
+                <a href="/category/?cate=other">View more</a>
+                </figcaption>     
+            </figure>
+        </div>
+        <div class="mybox-mini-right">
+            <div class="mybox-text-right " style="padding-top: 5%;">
+                <div style="height: 50%;">
+                    <h2><a href="/category/?cate=other" style="color:  #C0DED9;">其他</a></h2>
+            <p>反正和计算机无关</p>
+                </div>
+                <hr style="margin: 0px;">
+                {%- for _post in site.posts -%}
+                {% if _post.category == 'other' %}
+                <div style="height: 50%;"> 
+                    <div class="post-preview" >
+                        <a href="{{ _post.url | prepend: site.baseurl }}">
+                            <h2 class="post-title" style="font-size: 200%;color:  #eea29a;">
+                                {{ _post.title }}
+                            </h2>
+                            {% if _post.subtitle %}
+                            <h3 class="post-subtitle" style="color:  #eea29a;">
+                                {{ _post.subtitle }}
+                            </h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                    {% break %}
+                {% endif %}
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="mybox">
     <div class="grid" style="padding: 0px;">  
         <div >
@@ -53,7 +99,6 @@ description: "&nbsp;24/7 全年常休 随机营业&nbsp; <br> &nbsp;现已升级
         </div>
     </div>
 </div>
-
 
 <div class="mybox">
     <div class="grid" style="padding: 0px;">  
@@ -215,50 +260,6 @@ description: "&nbsp;24/7 全年常休 随机营业&nbsp; <br> &nbsp;现已升级
     </div>
 </div>
 
-<div class="mybox">
-    <div class="grid" style="padding: 0px;">  
-        <div >
-            <figure class="effect-milo" style="margin: 0px;width: 60%; position:absolute; z-index:1; right:0px;" >
-                <img src="img\in-post\a-blog.jpg" alt="img12"  height="360" style="object-fit: cover;"/>
-                <figcaption>
-                <div>
-                    <h2>Das <span>Leben</span></h2>
-                    <p style="padding-left: 5%;" >Hat jedenfalls nichts mit dem Computer zu tun</p>
-                </div>
-                <a href="/category/?cate=other">View more</a>
-                </figcaption>     
-            </figure>
-        </div>
-        <div class="mybox-mini-right">
-            <div class="mybox-text-right " style="padding-top: 5%;">
-                <div style="height: 50%;">
-                    <h2><a href="/category/?cate=other" style="color:  #C0DED9;">其他</a></h2>
-            <p>反正和计算机无关</p>
-                </div>
-                <hr style="margin: 0px;">
-                {%- for _post in site.posts -%}
-                {% if _post.category == 'other' %}
-                <div style="height: 50%;"> 
-                    <div class="post-preview" >
-                        <a href="{{ _post.url | prepend: site.baseurl }}">
-                            <h2 class="post-title" style="font-size: 200%;color:  #eea29a;">
-                                {{ _post.title }}
-                            </h2>
-                            {% if _post.subtitle %}
-                            <h3 class="post-subtitle" style="color:  #eea29a;">
-                                {{ _post.subtitle }}
-                            </h3>
-                            {% endif %}
-                        </a>
-                    </div>
-                </div>
-                    {% break %}
-                {% endif %}
-                {%endfor%}
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 
 <!-- phone view -->
