@@ -4,7 +4,7 @@ title:      "小周记"
 subtitle:   "这两周好忙啊"
 date:       2022-09-24
 author:     "Yvan"
-header-img: "img/in-post/background.jpg"
+header-img: "img/bg/background.jpg"
 header-mask: 0.8
 header-img-credit: "xresch from Pixabay"
 header-img-credit-href:  "pixabay.com/de/users/xresch-7410129/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3041437"

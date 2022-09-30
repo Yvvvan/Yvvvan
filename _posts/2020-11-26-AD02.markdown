@@ -4,7 +4,7 @@ title:      "Safety for Automated Driving-02"
 subtitle:   "SaFAD延伸 -- Safe State"
 date:       2020-11-26
 author:     "Yvan"
-header-img: "img/in-post/ves-ad/a.jpg"
+header-img: "img/bg/a.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true

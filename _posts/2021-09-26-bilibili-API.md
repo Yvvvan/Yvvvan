@@ -4,7 +4,7 @@ title:      "B站视频相关API"
 subtitle:   "以及在Wordpress下简单运用"
 date:       2021-09-26
 author:     "Yvan"
-header-img: "img/in-post/wordpress/wp-bg.jpg"
+header-img: "img/bg/wp-bg.jpg"
 header-mask: 0.3
 header-img-credit: "Dok Sev from Pixabay"
 header-img-credit-href:  "pixabay.com/de/users/doki7-646987/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=581849"

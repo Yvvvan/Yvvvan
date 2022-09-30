@@ -4,7 +4,7 @@ title:      "Wordpress实用插件"
 subtitle:   "简单整理"
 date:       2022-09-26
 author:     "Yvan"
-header-img: "img/in-post/wordpress/wp-bg.jpg"
+header-img: "img/bg/wp-bg.jpg"
 header-mask: 0.3
 header-img-credit: "Dok Sev from Pixabay"
 header-img-credit-href:  "pixabay.com/de/users/doki7-646987/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=581849"

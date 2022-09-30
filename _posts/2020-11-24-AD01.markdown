@@ -4,7 +4,7 @@ title:      "Safety for Automated Driving-01"
 subtitle:   "Safety First for Automated Driving的快速总结"
 date:       2020-11-24
 author:     "Yvan"
-header-img: "img/in-post/ves-ad/a.jpg"
+header-img: "img/bg/a.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true

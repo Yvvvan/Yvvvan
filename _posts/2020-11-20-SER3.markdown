@@ -4,7 +4,7 @@ title:      "机器人学中的状态估计-03"
 subtitle:   "K3 - LG系统下Recursive Filter"
 date:       2020-11-20
 author:     "Yvan"
-header-img: "img/in-post/ser0/rse-3.jpg"
+header-img: "img/bg/rse-3.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true

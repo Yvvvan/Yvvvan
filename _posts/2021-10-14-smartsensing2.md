@@ -4,7 +4,7 @@ title:     "Smart Sensing-02"
 subtitle:   "以智能水表为例"
 date:       2021-10-14
 author:     "Yvan"
-header-img: "img/in-post/smartsensor/bg.jpg"
+header-img: "img/bg/bg4.jpg"
 header-mask: 0.3
 header-img-credit: "Hands off my tags! Michael Gaida from Pixabay"
 header-img-credit-href:  "pixabay.com/de/users/michaelgaida-652234/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1696481"

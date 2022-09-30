@@ -4,7 +4,7 @@ title:      "机器人学中的状态估计-04"
 subtitle:   "K4 - NLNG系统下Recursive Filter"
 date:       2020-12-04
 author:     "Yvan"
-header-img: "img/in-post/ser0/rse-4.jpg"
+header-img: "img/bg/rse-4.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true

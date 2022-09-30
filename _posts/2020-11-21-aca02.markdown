@@ -4,7 +4,7 @@ title:      "计算机体系结构-02"
 subtitle:   "MIPS, Pipeline and Instruction Scheduling"
 date:       2020-11-21
 author:     "Yvan"
-header-img: "img/in-post/aca/aca-2.jpg"
+header-img: "img/bg/aca-2.jpg"
 header-mask: 0.3
 no-catalog: false
 mathjax: true
