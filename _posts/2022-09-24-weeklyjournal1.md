@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "小周记"
-subtitle:   "这两周好忙啊"
+
+
 date:       2022-09-24
 author:     "Yvan"
 header-img: "img/bg/background.jpg"
