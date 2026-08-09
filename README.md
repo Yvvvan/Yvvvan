@@ -5,6 +5,9 @@
 <a href="https://blog.yvan.tech">
   <img src="https://img.shields.io/badge/Website-blog.yvan.tech-2F81F7?style=flat-square&logo=github&logoColor=white" />
 </a>
+<a href="https://y-2.tech">
+  <img src="https://img.shields.io/badge/Berlin_Mahjong_Club-Website-2F81F7?style=flat-square&logo=github&logoColor=white" />
+</a>
 <a href="https://berlin-mahjong.club">
   <img src="https://img.shields.io/badge/Berlin_Mahjong_Club-Website-2F81F7?style=flat-square&logo=wordpress&logoColor=white" />
 </a>
