@@ -1,15 +1,14 @@
 <div align="center">
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=180&color=0:0D1117,100:2F81F7&section=header&text=Yvvvan&fontSize=46&fontColor=FFFFFF&fontAlignY=38&animation=fadeIn" />
-
-<a href="https://blog.yvan.tech">
-  <img src="https://img.shields.io/badge/Website-blog.yvan.tech-2F81F7?style=flat-square&logo=github&logoColor=white" />
-</a>
 <a href="https://y-2.tech">
-  <img src="https://img.shields.io/badge/Y-2_Tech-2F81F7?style=flat-square&logo=github&logoColor=white" />
+  <img src="https://img.shields.io/badge/Studio-y--2.tech-2F81F7?style=flat-square&logo=github&logoColor=white" />
+</a> <br> <br>
+<a href="https://blog.yvan.tech">
+  <img src="https://img.shields.io/badge/Blog-blog.yvan.tech-2F81F7?style=flat-square&logo=github&logoColor=white" />
 </a>
 <a href="https://berlin-mahjong.club">
-  <img src="https://img.shields.io/badge/Berlin_Mahjong_Club-Website-2F81F7?style=flat-square&logo=wordpress&logoColor=white" />
+  <img src="https://img.shields.io/badge/Club-berlin--mahjong.club-2F81F7?style=flat-square&logo=wordpress&logoColor=white" />
 </a>
 
 </div>
